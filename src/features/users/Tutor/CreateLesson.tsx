@@ -40,8 +40,8 @@ const CreateLesson: React.FC = () => {
         console.log("Content type ==> ", contentType, " <== index ==> ", index, "<== value ==> ", value)
     };
 
-    const handleImageUpload = (imageData: string | null) => {
-
+    const handleImageUpload = (z: any, a: any, b: any) => {
+        console.log(z, a, b, "z,a,b")
     };
 
     return (
@@ -63,9 +63,9 @@ const CreateLesson: React.FC = () => {
                             item.contentType === ContentTypes.BlockquoteLeft || item.contentType === ContentTypes.BlockquoteCenter || item.contentType === ContentTypes.BlockquoteRight) {
                             return <TextComponent key={item.index} contentType={item.contentType} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value,)} />;
                         } else if (item.contentType === ContentTypes.ImageClassic) {
-                            return <FileUpload id={`square-image${index}`}  isSquareImage={true} description='SVG, PNG, JPG or GIF (Ratio. 3:2)' />
+                            return <FileUpload key={item.index} id={`square-image${index}`} isSquareImage={false} description='SVG, PNG, JPG or GIF (Ratio. 3:2)' />
                         } else if (item.contentType === ContentTypes.ImageSquare) {
-                            return <FileUpload id={`classic-image${index}`} isSquareImage={false} description='SVG, PNG, JPG or GIF (Ratio. 1:1)' />
+                            return <FileUpload key={item.index} id={`classic-image${index}`} isSquareImage={true} description='SVG, PNG, JPG or GIF (Ratio. 1:1)' />
                         } else if (item.contentType === ContentTypes.Video) {
                             return (
                                 <div key={index}>

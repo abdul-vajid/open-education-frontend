@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 type FileUploadProps = {
     description?: string;
     isSquareImage?: boolean;
-    id: string,
+    id: string;
 };
 
 const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id }) => {
     const [imageData, setImageData] = useState<string | null>(null);
     const [isHovered, setIsHovered] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -22,14 +23,20 @@ const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id 
     };
 
     const handleImageClick = () => {
-        const fileInput = document.getElementById(`dropzone-file${id}`);
-        fileInput?.click();
+        fileInputRef.current?.click();
+    };
+
+    const handleRemoveImage = () => {
+        setImageData(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
     };
 
     return (
-        <div className='flex justify-center'>
+        <div className="flex justify-center">
             <div
-                className={`relative ${isSquareImage ? "w-64" : "w-2/3"} h-64 rounded-lg cursor-pointer my-3`}
+                className={`relative ${isSquareImage ? 'w-64' : 'w-2/3'} h-64 rounded-lg cursor-pointer my-3`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={handleImageClick}
@@ -78,7 +85,13 @@ const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id 
                     </div>
                 )}
 
-                <input id={`dropzone-file${id}`} type="file" className="hidden" onChange={handleFileChange} />
+                <input
+                    ref={fileInputRef}
+                    id={`dropzone-file${id}`}
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                />
             </div>
         </div>
     );
