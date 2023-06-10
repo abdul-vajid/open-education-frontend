@@ -8,7 +8,7 @@ import { otpSchema } from '../../utils/validations/otpSchema'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
 import { useNavigate } from 'react-router-dom'
 import { verifyEmailApi } from '../../app/api/authApi'
-import { setAccessToken, setLoggedUserData } from '../../features/users/common/userSlice'
+import { setAccessToken, setLoggedUserData } from '../../features/users/Common/userSlice'
 import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
 
 

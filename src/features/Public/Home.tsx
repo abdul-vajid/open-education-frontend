@@ -1,6 +1,6 @@
 import React from 'react'
-import PublicNavbar from '../../containers/Navbar/PublicNavbar'
-import PublicBanner from '../../containers/Banner/PublicBanner'
+import PublicNavbar from '../../containers/Navbars/PublicNavbar'
+import PublicBanner from '../../containers/Banners/PublicBanner'
 
 
 const Home: React.FC = () => {

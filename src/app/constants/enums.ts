@@ -1,0 +1,21 @@
+export enum ContentTypes {
+    TitleLeft = "title-left",
+    TitleCenter = "title-center",
+    TitleRight = "title-right",
+    SubtitleLeft = "subtitle-left",
+    SubtitleCenter = "subtitle-center",
+    SubtitleRight = "subtitle-right",
+    ParagraphLeft = "paragraph-left",
+    ParagraphCenter = "paragraph-center",
+    ParagraphRight = "paragraph-right",
+    BlockquoteLeft = "blockquote-left",
+    BlockquoteCenter = "blockquote-center",
+    BlockquoteRight = "blockquote-right",
+    ImageSquare = "image-square",
+    ImageClassic = "image-classic",
+    UnorderedList = "unordered-list",
+    OrderedList = "ordered-list",
+    Video = "video",
+    Table = "table",
+  }
+  
