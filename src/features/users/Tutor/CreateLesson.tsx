@@ -23,7 +23,7 @@ const CreateLesson: React.FC = () => {
         const newContent: IContents = {
             index: newIndex,
             contentType: component,
-            content: "" || []
+            content: ""
         };
 
         if (index !== undefined) {
@@ -37,12 +37,20 @@ const CreateLesson: React.FC = () => {
 
 
     const handleComponentChange = (contentType: ContentTypes, index: number, value: any,) => {
-        console.log("Content type ==> ", contentType, " <== index ==> ", index, "<== value ==> ", value)
+        if (contentType === ContentTypes.OrderedList) {
+            console.log("print contents array ===> ", contents)
+        } else {
+            const newContent: IContents = {
+                index,
+                contentType,
+                content: value
+            };
+            const updatedContents = [...contents];
+            updatedContents[index] = newContent;
+            setContents(updatedContents);
+        }
     };
 
-    const handleImageUpload = (z: any, a: any, b: any) => {
-        console.log(z, a, b, "z,a,b")
-    };
 
     return (
         <div>
@@ -63,19 +71,21 @@ const CreateLesson: React.FC = () => {
                             item.contentType === ContentTypes.BlockquoteLeft || item.contentType === ContentTypes.BlockquoteCenter || item.contentType === ContentTypes.BlockquoteRight) {
                             return <TextComponent key={item.index} contentType={item.contentType} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value,)} />;
                         } else if (item.contentType === ContentTypes.ImageClassic) {
-                            return <FileUpload key={item.index} id={`square-image${index}`} isSquareImage={false} description='SVG, PNG, JPG or GIF (Ratio. 3:2)' />
+                            return <FileUpload key={item.index} id={`square-image${index}`} isSquareImage={false} onChange={(fileData) =>
+                                handleComponentChange(item.contentType, item.index, fileData)} description='SVG, PNG, JPG or GIF (Ratio. 3:2)' />
                         } else if (item.contentType === ContentTypes.ImageSquare) {
-                            return <FileUpload key={item.index} id={`classic-image${index}`} isSquareImage={true} description='SVG, PNG, JPG or GIF (Ratio. 1:1)' />
+                            return <FileUpload key={item.index} id={`classic-image${index}`} isSquareImage={true} onChange={(fileData) =>
+                                handleComponentChange(item.contentType, item.index, fileData)
+                            } description='SVG, PNG, JPG or GIF (Ratio. 1:1)' />
                         } else if (item.contentType === ContentTypes.Video) {
                             return (
-                                <div key={index}>
+                                <div key={index} className='w-[50%]'>
                                     <InputField inputType='text' labelText='Video link' name={`video-link${index}`} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
-                                    {item.content && <iframe
+                                    {item.content && item.content !== "" && <iframe
                                         width="560"
                                         height="315"
                                         src={item.content}
                                         title={`Embedded YouTube video ${index}`}
-                                        frameBorder="0"
                                         allow="autoplay; encrypted-media"
                                         allowFullScreen
                                     />}
@@ -87,7 +97,7 @@ const CreateLesson: React.FC = () => {
                                     <TextComponent contentType={item.contentType} placeholder='Click here to edit List title' onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
 
                                     {Array.isArray(item.content) && item.content.map((element: any, elementIndex: number) => (
-                                        <TextComponent contentType={item.contentType} placeholder={`Edit item ${elementIndex} in the list`} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
+                                        elementIndex !== 0 && <TextComponent contentType={item.contentType} placeholder={`Edit item ${elementIndex} in the list`} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
                                     ))}
 
                                     <TextComponent contentType={item.contentType} placeholder='Add new item to the list' onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
@@ -129,8 +139,8 @@ const CreateLesson: React.FC = () => {
                                 <ComponentSelector id='video' title='Video' description='Youtube video link' position='center' onClick={() => handleAddingComponent(ContentTypes.Video, undefined)} />
                             </div>
                             <div className='flex justify-between gap-2'>
-                                <ComponentSelector id='o-list' title='Ordered List' description='' position='center' onClick={() => handleAddingComponent(ContentTypes.OrderedList, undefined)} />
-                                <ComponentSelector id='un-o-list' title='Unordered List' description='' position='center' onClick={() => handleAddingComponent(ContentTypes.UnorderedList, undefined)} />
+                                <ComponentSelector id='list' title='List' description='Upcoming feature' position='center' disabled={true} />
+                                <ComponentSelector id='Table' title='Table' description='Upcoming feature' position='center' disabled={true} />
                             </div>
                         </div>
                     </div>

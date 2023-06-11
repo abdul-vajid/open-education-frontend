@@ -4,7 +4,7 @@ import * as Yup from "yup";
 export const signupSchema = Yup.object().shape({
     email: Yup.string()
         .email("Invalid email address")
-        .matches(/^([a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+)\.([a-zA-Z]{2,6})$/, "Invalid fullname. Please enter a valid email")
+        .matches(/^([a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+)\.([a-zA-Z]{2,6})$/, "Invalid email. Please enter a valid email")
         .required("Email field is required"),
     fullname: Yup.string()
         .min(2, "Fullname must be at least 2 characters")

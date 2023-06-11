@@ -1,3 +1,4 @@
+
 interface TextAreaProps {
     labelText: string;
     name: string,
@@ -7,7 +8,7 @@ interface TextAreaProps {
     isMessage?: boolean;
     messageType?: "success" | "error" | "warning" | "info";
     message?: string;
-    onChange?: () => {}
+    onChange?: any
     onBlur?: any;
     onClick?: any
 }

@@ -32,7 +32,6 @@ const VerifyEmail: React.FC = () => {
             isLoading(true);
             verifyEmailApi({ otp: values.otp, token: confirmToken })
                 .then((response) => {
-                    console.log("Response >>>> ", response)
                     if (response.data.success) {
                         console.log("inside if....")
                         useSuccessToast(response.data.message)

@@ -8,12 +8,13 @@ type ComponentSelectorProps = {
     description?: string,
     onClick?: () => void,
     isChecked?: boolean
+    disabled?: boolean
 }
 
-const ComponentSelector: React.FC<ComponentSelectorProps> = ({ id, title, description, iconComponent, onClick, isChecked, position }) => {
+const ComponentSelector: React.FC<ComponentSelectorProps> = ({ id, title, description, iconComponent, onClick, isChecked, position, disabled }) => {
     return (
         <div className='w-full flex items-center'>
-            <input type="checkbox" id={id} value="" onClick={onClick} className="hidden peer" />
+            <input type="checkbox" id={id} value="" onClick={onClick} className="hidden peer" disabled={disabled ? true : false} />
             <label htmlFor={id} className={`
                 ${position === "right" ? "justify-end text-right" :
                     position === "center" ? "justify-center text-center" :
@@ -22,7 +23,7 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({ id, title, descri
                 <div className="block">
                     <div className='flex align-middle'>
                         {
-                           iconComponent && <span className='w-7 h-7'>{iconComponent}</span>
+                            iconComponent && <span className='w-7 h-7'>{iconComponent}</span>
                         }
                         <div className="w-full text-sm md:text-md font-normal">{title}</div>
                     </div>

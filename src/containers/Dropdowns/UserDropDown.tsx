@@ -1,19 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
 import { setDarkTheme, setLightTheme } from '../../features/theme/themeSlice'
+import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
+import { setLoggedUserData } from '../../features/users/Common/userSlice'
+import useLogout from '../../app/hooks/useLogout'
 
 const UserDropDown: React.FC = () => {
     const { email, fullname } = useAppSelector(state => state.user)
     const { currentTheme } = useAppSelector(state => state.theme)
     const dispatch = useAppDispatch()
+    const axios = useAxiosPrivate()
+    const logout = useLogout()
 
     const handleTheme = (e: any) => {
-        if (e.value === 'checked' || currentTheme ==="light") {
+        if (e.value === 'checked' || currentTheme === "light") {
             dispatch(setDarkTheme())
         } else if (e.value !== "checked" || currentTheme === "dark") {
             dispatch(setLightTheme())
         }
     }
+
+    const fetchUserDetails = () => {
+        axios
+            .get("user/get-user")
+            .then((res) => {
+                if (res?.data?.success) dispatch(setLoggedUserData(res?.data?.data));
+            })
+            .catch(() => {
+                logout()
+            })
+    };
+
+    useEffect(() => {
+        fetchUserDetails()
+    }, [])
+
 
     return (
         <div className="fixed top-12 right-6 z-50 my-4 pr-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
@@ -42,7 +63,7 @@ const UserDropDown: React.FC = () => {
                     </div>
                 </li>
                 <li>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                    <a href='#' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => logout()} role="menuitem">Sign out</a>
                 </li>
             </ul>
         </div>

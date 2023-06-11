@@ -43,10 +43,25 @@ const userSlice = createSlice({
             state.email = action.payload.email
             state.fullname = action.payload.fullname
             state.phoneNumber = action.payload.phoneNumber
+            state.about = action.payload.about || ''
+            state.city = action.payload.city || ''
+            state.county = action.payload.county || ''
+            state.profilePicture = action.payload.profilePicture || ''
+            state.profileTitle = action.payload.profileTitle || ''
         },
         clearLoggedUserData: (state) => {
-            state = initialState
-        }
+            state.accessToken = '';
+            state.email = '';
+            state.fullname = '';
+            state.phoneNumber = 0;
+            state.role = '';
+            state.userId = '';
+            state.about = '';
+            state.city = '';
+            state.county = '';
+            state.profilePicture = '';
+            state.profileTitle = '';
+        },
     },
 })
 

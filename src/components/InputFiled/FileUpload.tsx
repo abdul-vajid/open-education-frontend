@@ -4,9 +4,10 @@ type FileUploadProps = {
     description?: string;
     isSquareImage?: boolean;
     id: string;
+    onChange: (fileData: any) => void;
 };
 
-const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id, onChange }) => {
     const [imageData, setImageData] = useState<string | null>(null);
     const [isHovered, setIsHovered] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -17,6 +18,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id 
             const reader = new FileReader();
             reader.onload = (e) => {
                 setImageData(e.target?.result as string);
+                onChange(e.target?.result);
             };
             reader.readAsDataURL(file);
         }
@@ -24,13 +26,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id 
 
     const handleImageClick = () => {
         fileInputRef.current?.click();
-    };
-
-    const handleRemoveImage = () => {
-        setImageData(null);
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
     };
 
     return (
