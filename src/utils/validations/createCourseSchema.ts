@@ -16,5 +16,5 @@ export const createCourseSchema = yup.object().shape({
         .min(15, "Description must be at least 15 characters")
         .max(2000, "Description must be at most 2000 characters")
         .required("Description is required"),
-    prerequisites: yup.array().of(yup.string()).nullable(),
+    prerequisites: yup.string().trim()
 });
