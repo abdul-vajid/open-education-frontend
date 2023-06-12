@@ -17,7 +17,7 @@ const NonPublishedCourses: React.FC<NonPublishedCoursesProps> = ({ classNames })
             <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Unpublished Courses</span>
             <ul>
                 {unpublishedCourses?.map((course, i) => (
-                    <Link to={`/tutor/course/details/${course}/`} key={course._id}>
+                    <Link to={`/tutor/course/details/${course.status}/${course._id}/`} key={course._id}>
                         <SingleUnpublishedCourse count={i + 1} course={course} />
                     </Link>
                 ))}

@@ -1,11 +1,12 @@
 import React from 'react'
+import { TCourse } from '../../app/types/types'
 
 type CourseDetailsBoxProps = {
     classNames?: string
-    courseId: string | undefined
+    course: TCourse | undefined
 }
 
-const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames, courseId }) => {
+const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames, course }) => {
 
     return (
         <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full rounded-lg p-8`}>
@@ -15,8 +16,8 @@ const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames, courseI
                 <div className='w-20 h-20 md:w-24 md:h-24 lg:w-44 lg:h-44 rounded-md bg-black'>
                 </div>
                 <div className='flex flex-col gap-1'>
-                    <span className='text-xl lg:text-2xl text-light_primary_text dark:text-dark_primary_text'>{courseId}</span>
-                    <span className='text-md lg:text-lg text-light_secondary_text dark:text-dark_secondary_text'>field of study</span>
+                    <span className='text-xl lg:text-2xl text-light_primary_text dark:text-dark_primary_text'>{course?.courseTitle}</span>
+                    <span className='text-md lg:text-lg text-light_secondary_text dark:text-dark_secondary_text'>{course?.fieldOfStudy}</span>
                 </div>
             </div>
         </div>
