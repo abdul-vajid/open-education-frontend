@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import InputField from '../../components/InputFiled/InputField'
 import TextArea from '../../components/InputFiled/TextArea'
 import WFullPrimaryBtn from '../../components/Button/WFullPrimaryBtn'
@@ -6,14 +7,19 @@ import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
 import { createCourseSchema } from '../../utils/validations/createCourseSchema'
 import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
 import { useFormik } from 'formik'
+import { useAppDispatch } from '../../app/hooks/storeHooks'
+import { fetchCourses } from '../../features/users/Tutor/tutorCoursesSlice'
 
 type CreateCourseProps = {
     classNames?: string
+    close: any;
 }
 
-const CreateCourse: React.FC<CreateCourseProps> = ({ classNames }) => {
+const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
     const [loading, isLoading] = useState(false)
     const axios = useAxiosPrivate()
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {
@@ -40,7 +46,11 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames }) => {
                         res.data.message && useSuccessToast({
                             message: res.data.message
                         });
-
+                        dispatch(fetchCourses(axios));
+                        navigate(`/tutor/course/details/${res.data.data.courseId}`,
+                            {
+                                replace: true
+                            });
                     } else {
                         useErrorToast({
                             message: res.data.message || "Something went wrong",
@@ -60,7 +70,12 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames }) => {
 
     return (
         <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full w-full rounded-lg p-8 mb-5`}>
-            <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Create Course</span>
+            <div className='flex justify-between'>
+                <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Create Course</span>
+                {
+                    close
+                }
+            </div>
             <InputField
                 inputType='text'
                 labelText='Course Title'

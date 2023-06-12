@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackArrowButton from '../../../components/Button/BackArrowButton';
 import OutlineBtn from '../../../components/Button/OutlineBtn';
 import ComponentSelector from '../../../components/Button/ComponentSelector';
@@ -8,7 +9,7 @@ import FileUpload from '../../../components/InputFiled/FileUpload';
 import InputField from '../../../components/InputFiled/InputField';
 
 const CreateLesson: React.FC = () => {
-
+    const navigate = useNavigate();
 
     interface IContents {
         index: number;
@@ -57,7 +58,7 @@ const CreateLesson: React.FC = () => {
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                 <div className="px-3 py-3 lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
-                        <BackArrowButton classNames='z-50 border border-light_primary dark:border-dark_primary rounded-full h-10 w-10 flex p-2 justify-center items-center' />
+                        <BackArrowButton onClick={()=> navigate(-1)} classNames='z-50 border border-light_primary dark:border-dark_primary rounded-full h-10 w-10 flex p-2 justify-center items-center' />
                         <OutlineBtn btnText='Save Lesson' />
                     </div>
                 </div>

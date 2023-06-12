@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import InputField from '../../components/InputFiled/InputField'
 import WFullPrimaryBtn from '../../components/Button/WFullPrimaryBtn'
 import PasswordField from '../../components/InputFiled/PasswordField'
-import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
+import { useAppDispatch } from '../../app/hooks/storeHooks'
 import { useNavigate } from 'react-router-dom'
 import { loginApi } from '../../app/api/authApi'
 import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
@@ -12,12 +12,11 @@ import { loginSchema } from '../../utils/validations/loginSchema'
 
 
 const LoginForm: React.FC = () => {
-    const user = useAppSelector(state => state.user)
     const dispatch = useAppDispatch()
     const [loading, isLoading] = useState(false)
     const navigate = useNavigate()
 
-    const formik =  useFormik({
+    const formik = useFormik({
         initialValues: {
             email: "",
             password: ""
@@ -28,7 +27,7 @@ const LoginForm: React.FC = () => {
         onSubmit: async (values) => {
             isLoading(true);
             await loginApi({ email: values.email, password: values.password })
-            .then((response) => {
+                .then((response) => {
                     if (response.data.success) {
                         useSuccessToast(response.data.message)
                         dispatch(setLoggedUserData(response.data.data));
