@@ -10,11 +10,12 @@ interface TextAreaProps {
     message?: string;
     onChange?: any
     onBlur?: any;
-    onClick?: any
+    onClick?: any;
+    isInverted?: any
 }
 
 const TextArea: React.FC<TextAreaProps> = (props) => {
-    const { labelText, name, placeHolder, messageType, message, isMessage, isDisabled, onChange, onClick, value } = props;
+    const { labelText, name, placeHolder, messageType, message, isMessage, isDisabled, onChange, onClick, value, isInverted } = props;
 
     let messageColorClass = '';
     switch (messageType) {
@@ -44,7 +45,7 @@ const TextArea: React.FC<TextAreaProps> = (props) => {
                 isDisabled ? <textarea
                     onClick={onClick}
                     value={value !== 0 ? value : undefined}
-                    className={`bg-light_secondary_bg dark:bg-dark_secondary_bg  text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
+                    className={`${isInverted ? "bg-light_primary_bg dark:bg-dark_primary_bg" : "bg-light_secondary_bg dark:bg-dark_secondary_bg "} text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
                     placeholder={placeHolder}
                     disabled
                 /> :
@@ -53,7 +54,7 @@ const TextArea: React.FC<TextAreaProps> = (props) => {
                         onChange={onChange}
                         onClick={onClick}
                         value={value !== 0 ? value : undefined}
-                        className={`bg-light_secondary_bg dark:bg-dark_secondary_bg  text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
+                        className={`${isInverted ? "bg-light_primary_bg dark:bg-dark_primary_bg" : "bg-light_secondary_bg dark:bg-dark_secondary_bg "} text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
                         placeholder={placeHolder}
                     />
             }

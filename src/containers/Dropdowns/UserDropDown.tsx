@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
 import { setDarkTheme, setLightTheme } from '../../features/theme/themeSlice'
 import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
-import { setLoggedUserData } from '../../features/users/Common/userSlice'
+import { clearLoggedUserData, setLoggedUserData } from '../../features/users/Common/userSlice'
 import useLogout from '../../app/hooks/useLogout'
 
 const UserDropDown: React.FC = () => {
@@ -27,7 +27,7 @@ const UserDropDown: React.FC = () => {
                 if (res?.data?.success) dispatch(setLoggedUserData(res?.data?.data));
             })
             .catch(() => {
-                logout()
+                dispatch(clearLoggedUserData())
             })
     };
 

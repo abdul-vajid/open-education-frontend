@@ -7,7 +7,7 @@ import OutlineBtn from '../../components/Button/OutlineBtn'
 const PublicBanner: React.FC = () => {
 
     return (
-        <div className='absolute top[25%] flex justify-around h-[750px] w-full'>
+        <div className='flex justify-around h-[750px] w-full'>
             <div className='relative top-[35%] md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%]'>
                 <span className='text-light_primary_text dark:text-dark_primary_text font-semibold text-2xl font-mono'>The New and Open</span> <br />
                 <span className='text-oedark dark:text-gray-300 font-semibold text-6xl'>Way Of Education</span> <br />

@@ -14,11 +14,11 @@ const TextComponent: React.FC<TextComponentProps> = ({ contentType, onChange, pl
         ${contentType === ContentTypes.ParagraphRight || contentType === ContentTypes.TitleRight || contentType === ContentTypes.SubtitleRight || contentType === ContentTypes.BlockquoteRight ? "justify-end" :
                 contentType === ContentTypes.ParagraphCenter || contentType === ContentTypes.TitleCenter || contentType === ContentTypes.SubtitleCenter || contentType === ContentTypes.BlockquoteCenter ? "justify-center" :
                     "justify-start"}`}>
-            <input onChange={onChange} placeholder={placeholder ? placeholder : "Click here to edit"} type="text" className={`
+            <textarea onChange={onChange} placeholder={placeholder ? placeholder : "Click here to edit"} className={`
             ${contentType === ContentTypes.ParagraphRight || contentType === ContentTypes.TitleRight || contentType === ContentTypes.SubtitleRight || contentType === ContentTypes.BlockquoteRight ? "text-right" :
                     contentType === ContentTypes.ParagraphCenter || contentType === ContentTypes.TitleCenter || contentType === ContentTypes.SubtitleCenter || contentType === ContentTypes.BlockquoteCenter ? "text-center" :
                         "text-left"}
-            text-light_primary_text dark:text-dark_primary_text bg-transparent border-0 outline-none
+            text-light_primary_text dark:text-dark_primary_text bg-transparent border-0 outline-none w-full h-auto resize
             ${contentType === ContentTypes.TitleLeft || contentType === ContentTypes.TitleCenter || contentType === ContentTypes.TitleRight ? "font-bold text-xl md:text-2xl lg:text-3xl mb:3" :
                     contentType === ContentTypes.SubtitleLeft || contentType === ContentTypes.SubtitleCenter || contentType === ContentTypes.SubtitleRight ? "font-medium text-md md:text-lg lg:text-xl mb:2" :
                         contentType === ContentTypes.ParagraphLeft || contentType === ContentTypes.ParagraphCenter || contentType === ContentTypes.ParagraphRight ? "font-normal text-sm mb:4" :

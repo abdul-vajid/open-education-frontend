@@ -1,3 +1,5 @@
+import { AxiosInstance } from "axios";
+
 export type TCourse = {
     _id: string;
     authorId: string;
@@ -7,11 +9,16 @@ export type TCourse = {
     enrolledCount: number;
     status: string;
     description: string;
-    prerequisites: string[];
-    discountCoupons: any[];
-    lessons: any[];
-    reviews: any[];
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
+    prerequisites: string[] | string;
+    discountCoupons: any[] | string;
+    lessons: any[] | string;
+    reviews: any[] | string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
 };
+
+export type TFetchCourseExtra = {
+    courseId: string
+    axiosInstance: AxiosInstance
+}

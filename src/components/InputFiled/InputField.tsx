@@ -14,10 +14,11 @@ interface InputFieldProps {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
     onBlur?: any;
     onClick?: any
+    isInverted?: boolean
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
-    const { labelText, inputType, name, placeHolder, messageType, message, isMessage, isDisabled, onChange, onClick,value } = props;
+    const { labelText, inputType, name, placeHolder, messageType, message, isMessage, isDisabled, onChange, onClick,value, isInverted } = props;
 
     let messageColorClass = '';
     switch (messageType) {
@@ -50,7 +51,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
                     onChange={onChange}
                     onClick={onClick}
                     value={value !== 0 ? value : undefined}
-                    className={`bg-light_secondary_bg dark:bg-dark_secondary_bg  text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
+                    className={`${isInverted ? "bg-light_primary_bg dark:bg-dark_primary_bg" : "bg-light_secondary_bg dark:bg-dark_secondary_bg "} text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
                     placeholder={placeHolder}
                     disabled
                 /> :
@@ -60,7 +61,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
                         onChange={onChange}
                         onClick={onClick}
                         value={value !== 0 ? value : undefined}
-                        className={`bg-light_secondary_bg dark:bg-dark_secondary_bg  text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
+                        className={`${isInverted ? "bg-light_primary_bg dark:bg-dark_primary_bg" : "bg-light_secondary_bg dark:bg-dark_secondary_bg "} text-light_primary_text dark:text-dark_primary_text placeholder-fade_text text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:border-light_primary focus:ring-1`}
                         placeholder={placeHolder}
                     />
             }

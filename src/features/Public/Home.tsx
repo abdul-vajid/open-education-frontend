@@ -8,6 +8,8 @@ const Home: React.FC = () => {
         <>
             <PublicNavbar />
             <PublicBanner />
+            <div>
+            </div>
         </>
     )
 }

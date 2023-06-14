@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BackArrowButton from '../../../components/Button/BackArrowButton';
 import OutlineBtn from '../../../components/Button/OutlineBtn';
 import ComponentSelector from '../../../components/Button/ComponentSelector';
@@ -7,17 +7,49 @@ import { ContentTypes } from '../../../app/constants/enums';
 import TextComponent from '../../../components/LessonComponents/TextComponent';
 import FileUpload from '../../../components/InputFiled/FileUpload';
 import InputField from '../../../components/InputFiled/InputField';
+import DefaultModal from '../../../components/Modal/DefaultModal';
+import { IoClose } from 'react-icons/io5';
+import PrimaryBtn from '../../../components/Button/PrimaryBtn';
+import TextArea from '../../../components/InputFiled/TextArea';
+import { useFormik } from 'formik';
+import { useAppSelector } from '../../../app/hooks/storeHooks';
+import { TCourse } from '../../../app/types/types';
+import { createLessonSchema } from '../../../utils/validations/createLessonSchema';
+import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate';
+import { useErrorToast, useSuccessToast } from '../../../app/hooks/toastHooks';
+
+
+interface IContents {
+    index: number;
+    contentType: ContentTypes;
+    content: any;
+}
 
 const CreateLesson: React.FC = () => {
+    const { courseId } = useParams();
     const navigate = useNavigate();
+    const axios = useAxiosPrivate();
+    const [contents, setContents] = useState<IContents[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [modalVisibility, setModalVisibility] = useState<boolean>(false);
+    const { courses } = useAppSelector(state => state.tutorCourses)
 
-    interface IContents {
-        index: number;
-        contentType: ContentTypes;
-        content: any;
+    if (!courseId || courseId === undefined || courseId === null) {
+        navigate("/tutor/courses",
+            {
+                replace: true
+            });
     }
 
-    const [contents, setContents] = useState<IContents[]>([]);
+    const courseIndex: number = courses.unpublishedCourses.findIndex((course) => course._id === courseId);
+    const course: TCourse = courses.unpublishedCourses[courseIndex]
+
+    let highestIndex: number = 0
+    if (course?.lessons.length > 0 && Array.isArray(course?.lessons)) {
+        highestIndex = course.lessons.reduce((maxIndex, lesson) => {
+            return lesson.lessonIndex > maxIndex ? lesson.lessonIndex : maxIndex;
+        }, 0)
+    }
 
     const handleAddingComponent = (component: ContentTypes, index: number | undefined) => {
         const newIndex = contents.length;
@@ -38,19 +70,80 @@ const CreateLesson: React.FC = () => {
 
 
     const handleComponentChange = (contentType: ContentTypes, index: number, value: any,) => {
-        if (contentType === ContentTypes.OrderedList) {
-            console.log("print contents array ===> ", contents)
-        } else {
-            const newContent: IContents = {
-                index,
-                contentType,
-                content: value
-            };
-            const updatedContents = [...contents];
-            updatedContents[index] = newContent;
-            setContents(updatedContents);
-        }
+        const newContent: IContents = {
+            index,
+            contentType,
+            content: value
+        };
+        const updatedContents = [...contents];
+        updatedContents[index] = newContent;
+        setContents(updatedContents);
     };
+
+    const formik = useFormik({
+        initialValues: {
+            courseId: course._id,
+            lessonTitle: "",
+            description: "",
+            lessonIndex: highestIndex + 1,
+            contents: contents.filter(element => {
+                return element.content && element.content !== "" && element.content !== null && element.content !== undefined;
+            })
+        },
+
+        validationSchema: createLessonSchema,
+
+        onSubmit: async (values) => {
+            setIsLoading(true);
+            await axios.post('/course/create-lesson', {
+                courseId: values.courseId,
+                lessonTitle: values.lessonTitle,
+                description: values.description,
+                lessonIndex: values.lessonIndex,
+                contents: contents.filter(element => {
+                    return element.content && element.content !== "" && element.content !== null && element.content !== undefined;
+                })
+            })
+                .then((res: any) => {
+                    if (res.data.success === true) {
+                        formik.resetForm();
+                        res.data.message && useSuccessToast({
+                            message: res.data.message
+                        });
+                        navigate(`/tutor/course/details/${course.status}/${course._id}/`,
+                            {
+                                replace: true
+                            });
+                    } else {
+                        useErrorToast({
+                            message: res.data.message || "Something went wrong",
+                        });
+                    }
+                })
+                .catch((err: any) => {
+                    useErrorToast({
+                        message: err?.response?.data?.message || "Something went wrong",
+                    });
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        }
+    });
+
+    if (formik.errors === formik.errors.contents && formik.isSubmitting) {
+        useErrorToast({
+            message: "Please review the content and try again.",
+        });
+    } else if (formik.errors === formik.errors.courseId && formik.isSubmitting) {
+        useErrorToast({
+            message: "Something went wrong. Please try again.",
+        });
+    } else if (formik.errors === formik.errors.lessonIndex && formik.isSubmitting) {
+        useErrorToast({
+            message: "Something went wrong. Please try again...",
+        });
+    }
 
 
     return (
@@ -58,11 +151,46 @@ const CreateLesson: React.FC = () => {
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                 <div className="px-3 py-3 lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
-                        <BackArrowButton onClick={()=> navigate(-1)} classNames='z-50 border border-light_primary dark:border-dark_primary rounded-full h-10 w-10 flex p-2 justify-center items-center' />
-                        <OutlineBtn btnText='Save Lesson' />
+                        <BackArrowButton onClick={() => modalVisibility ? setModalVisibility(false) : navigate(-1)} classNames='z-50 border border-light_primary dark:border-dark_primary rounded-full h-10 w-10 flex p-2 justify-center items-center' />
+                        <OutlineBtn btnText='Upload Lesson' isDisabled={modalVisibility ? true : false} onClick={() => setModalVisibility(!modalVisibility)} />
                     </div>
                 </div>
             </nav>
+            {
+                modalVisibility && <div className='fixed top-50 flex justify-center md:left-40 lg:left-64 md:justify-start h-full w-full z-50'>
+                    <DefaultModal title='Ready to Upload Your Lesson?'
+                        topComponentOne={<InputField
+                            inputType='text'
+                            labelText='Lesson Title'
+                            name='lessonTitle'
+                            isInverted={true}
+                            placeHolder="eg: Introduction to Digital marketing"
+                            messageType="error"
+                            value={formik.values.lessonTitle}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            isMessage={formik.touched.lessonTitle}
+                            message={formik.errors.lessonTitle}
+                        />}
+                        topComponentTwo={<TextArea
+                            labelText='Lesson Description'
+                            name='description'
+                            isInverted={true}
+                            placeHolder="eg: Introduction to Digital Marketing: Explore the basics of online marketing, including SEO, social media, PPC, and more. Kickstart your journey towards digital success!"
+                            messageType="error"
+                            value={formik.values.description}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            isMessage={formik.touched.description}
+                            message={formik.errors.description}
+                        />}
+                        rightButton={<PrimaryBtn isLoading={isLoading ? true : false} btnText='Upload Lesson' onClick={formik.submitForm} />}
+                        leftButton={<OutlineBtn btnText='Preview' />} paragraphOne='
+                                We highly recommend previewing your lesson before uploading it. Our lesson quality assurance bot will automatically remove any empty components, ensuring the highest quality for your lesson. Thank you for your understanding, and happy teaching!
+            '
+                        closeButton={<IoClose onClick={() => setModalVisibility(false)} className="text-2xl text-light_primary_text dark:text-dark_primary_text cursor-pointer" />} />
+                </div>
+            }
             <div className='flex justify-between px-5 gap-5 w-full h-full mt-[100px]'>
                 <div className='bg-light_primary_bg dark:bg-dark_primary_bg min-h-screen w-full lg:w-[65%] rounded-lg p-8  overscroll-y-contain'>
                     {contents.map((item, index) => {
@@ -72,11 +200,11 @@ const CreateLesson: React.FC = () => {
                             item.contentType === ContentTypes.BlockquoteLeft || item.contentType === ContentTypes.BlockquoteCenter || item.contentType === ContentTypes.BlockquoteRight) {
                             return <TextComponent key={item.index} contentType={item.contentType} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value,)} />;
                         } else if (item.contentType === ContentTypes.ImageClassic) {
-                            return <FileUpload key={item.index} id={`square-image${index}`} isSquareImage={false} onChange={(fileData) =>
-                                handleComponentChange(item.contentType, item.index, fileData)} description='SVG, PNG, JPG or GIF (Ratio. 3:2)' />
+                            return <FileUpload key={item.index} id={`square-image${index}`} isSquareImage={false} onChange={(imageUrl) =>
+                                handleComponentChange(item.contentType, item.index, imageUrl)} description='SVG, PNG, JPG or GIF (Ratio. 3:2)' />
                         } else if (item.contentType === ContentTypes.ImageSquare) {
-                            return <FileUpload key={item.index} id={`classic-image${index}`} isSquareImage={true} onChange={(fileData) =>
-                                handleComponentChange(item.contentType, item.index, fileData)
+                            return <FileUpload key={item.index} id={`classic-image${index}`} isSquareImage={true} onChange={(imageUrl) =>
+                                handleComponentChange(item.contentType, item.index, imageUrl)
                             } description='SVG, PNG, JPG or GIF (Ratio. 1:1)' />
                         } else if (item.contentType === ContentTypes.Video) {
                             return (
@@ -97,7 +225,7 @@ const CreateLesson: React.FC = () => {
                                 <div key={index} className='flex flex-col gap-2 mb-4'>
                                     <TextComponent contentType={item.contentType} placeholder='Click here to edit List title' onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
 
-                                    {Array.isArray(item.content) && item.content.map((element: any, elementIndex: number) => (
+                                    {Array.isArray(item.content) && item.content.map((_element: any, elementIndex: number) => (
                                         elementIndex !== 0 && <TextComponent contentType={item.contentType} placeholder={`Edit item ${elementIndex} in the list`} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
                                     ))}
 

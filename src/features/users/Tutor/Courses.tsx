@@ -31,7 +31,7 @@ const Courses: React.FC = () => {
                     }
                     <NonPublishedCourses />
                 </div>
-                <ListCourses classNames='lg:w-[70%]' />
+                <ListCourses classNames='lg:w-[70%]'/>
             </div>
 
             {

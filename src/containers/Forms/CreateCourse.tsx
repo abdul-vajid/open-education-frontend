@@ -9,6 +9,7 @@ import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
 import { useFormik } from 'formik'
 import { useAppDispatch } from '../../app/hooks/storeHooks'
 import { fetchCourses } from '../../features/users/Tutor/tutorCoursesSlice'
+import { CourseStatus } from '../../app/types/enums';
 
 type CreateCourseProps = {
     classNames?: string
@@ -32,7 +33,6 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
         validationSchema: createCourseSchema,
 
         onSubmit: async (values) => {
-            console.log("Debug log values >>> >>> >>>", values)
             isLoading(true);
             await axios.post('/course/create-course', {
                 courseTitle: values.courseTitle,
@@ -47,7 +47,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
                             message: res.data.message
                         });
                         dispatch(fetchCourses(axios));
-                        navigate(`/tutor/course/details/${res.data.data.courseId}`,
+                        navigate(`/tutor/course/details/${CourseStatus.Draft}/${res.data.data.courseId}`,
                             {
                                 replace: true
                             });
