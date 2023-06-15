@@ -5,6 +5,10 @@ export type TCourse = {
     authorId: string;
     courseTitle: string;
     imageUrl?: string;
+    courseFee?: string;
+    paymentMode?: string;
+    valuationMode?: string;
+    difficulty?: string;
     fieldOfStudy: string;
     enrolledCount: number;
     status: string;

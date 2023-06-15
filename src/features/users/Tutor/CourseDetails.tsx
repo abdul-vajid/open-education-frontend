@@ -10,6 +10,7 @@ import { TCourse } from '../../../app/types/types'
 import { CourseStatus } from '../../../app/types/enums'
 import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate'
 import { fetchCourse } from './tutorCoursesSlice'
+import { setCurrentCourse } from './currentCourseSlice'
 
 const CourseDetails: React.FC = () => {
     const axiosInstance = useAxiosPrivate();
@@ -27,22 +28,33 @@ const CourseDetails: React.FC = () => {
         case CourseStatus.Draft:
             const { unpublishedCourses } = useAppSelector(state => state.tutorCourses.courses)
             course = findCourseById(unpublishedCourses)
+            console.log("course from courseDetails",course)
+            if (course) {
+                dispatch(setCurrentCourse(course))
+            }
             break;
         case CourseStatus.Published:
             const { publishedCourses } = useAppSelector(state => state.tutorCourses.courses)
             course = findCourseById(publishedCourses)
+            if (course) {
+                dispatch(setCurrentCourse(course))
+            }
             break;
         case CourseStatus.Unlisted:
             const { unlistedCourses } = useAppSelector(state => state.tutorCourses.courses)
             course = findCourseById(unlistedCourses)
+            if (course) {
+                dispatch(setCurrentCourse(course))
+            }
             break;
     }
 
     useEffect(() => {
         if (course?._id) {
+            console.log("fetchCourse trigger>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             dispatch(fetchCourse({ courseId: course._id, axiosInstance }));
         }
-    }, [course])
+    }, [])
 
     return (
         <>
@@ -51,7 +63,7 @@ const CourseDetails: React.FC = () => {
 
             <div className="p-5 mt-20 md:ml-64 flex flex-col gap-5 lg:flex-row lg:gap-5" onClick={() => { setSideMenu(true) }}>
                 <CourseDetailsBox classNames='w-full lg:w-[65%]' course={course} />
-                <ListLessons lessons={course?.lessons} />
+                <ListLessons courseId={course?._id} />
             </div>
             <Link to={`/tutor/course/${course?._id}/create-lesson`}>
                 <FloatingActionBtn btnText='Create Lesson' />
