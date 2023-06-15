@@ -5,7 +5,6 @@ import SearchField from '../../components/InputFiled/SearchField';
 
 const PublicNavbar: React.FC = () => {
     const handleClick = () => {
-        console.log('Button clicked!');
     };
 
     return (

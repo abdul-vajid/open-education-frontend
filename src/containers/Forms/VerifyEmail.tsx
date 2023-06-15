@@ -33,7 +33,6 @@ const VerifyEmail: React.FC = () => {
             verifyEmailApi({ otp: values.otp, token: confirmToken })
                 .then((response) => {
                     if (response.data.success) {
-                        console.log("inside if....")
                         useSuccessToast(response.data.message)
                         dispatch(setLoggedUserData(response.data.data));
                         dispatch(setAccessToken(response.data.accessToken))
@@ -61,7 +60,6 @@ const VerifyEmail: React.FC = () => {
 
     useEffect(() => {
         if (!confirmToken || confirmToken === '') {
-            console.log('inisde codition...');
             navigate('/login')
         }
     }, [])

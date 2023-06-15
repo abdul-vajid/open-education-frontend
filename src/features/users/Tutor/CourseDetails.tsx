@@ -28,7 +28,6 @@ const CourseDetails: React.FC = () => {
         case CourseStatus.Draft:
             const { unpublishedCourses } = useAppSelector(state => state.tutorCourses.courses)
             course = findCourseById(unpublishedCourses)
-            console.log("course from courseDetails",course)
             if (course) {
                 dispatch(setCurrentCourse(course))
             }
@@ -51,7 +50,6 @@ const CourseDetails: React.FC = () => {
 
     useEffect(() => {
         if (course?._id) {
-            console.log("fetchCourse trigger>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             dispatch(fetchCourse({ courseId: course._id, axiosInstance }));
         }
     }, [])

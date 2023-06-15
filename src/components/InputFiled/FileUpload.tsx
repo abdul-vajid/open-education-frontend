@@ -36,7 +36,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id,
                 }
             })
             .catch((err) => {
-                console.log("Debug log >>> >>> >>> err from handleimg upload catch", err)
                 setErrMsg(err?.response?.data?.message || "Something went wrong",)
                 setIsError(true)
             })

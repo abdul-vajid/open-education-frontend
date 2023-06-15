@@ -29,7 +29,6 @@ const SetPassword: React.FC = () => {
 
         onSubmit: async (values) => {
             setLoading(true);
-            console.log(values)
             await signupApi({
                 email,
                 fullname,

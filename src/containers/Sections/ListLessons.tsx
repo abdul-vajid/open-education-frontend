@@ -20,8 +20,6 @@ const ListLessons: React.FC<ListLessonsProps> = ({ classNames, courseId }) => {
             });
     }
 
-    console.log("course from list lessons",course)
-
     return (
         <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full w-full lg:w-[60%] rounded-lg p-8`}>
             <div className='flex justify-between items-baseline'>
