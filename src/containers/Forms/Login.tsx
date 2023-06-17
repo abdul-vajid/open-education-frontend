@@ -4,7 +4,7 @@ import InputField from '../../components/InputFiled/InputField'
 import WFullPrimaryBtn from '../../components/Button/WFullPrimaryBtn'
 import PasswordField from '../../components/InputFiled/PasswordField'
 import { useAppDispatch } from '../../app/hooks/storeHooks'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { loginApi } from '../../app/api/authApi'
 import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
 import { setAccessToken, setLoggedUserData } from '../../features/users/Common/userSlice'
@@ -79,8 +79,9 @@ const LoginForm: React.FC = () => {
             <div className='my-10'>
                 <WFullPrimaryBtn btnText='Login' type='submit' onClick={formik.submitForm} isLoading={loading} />
             </div>
-
-            <p className='text-light_primary_text dark:text-dark_primary_text flex justify-center'>don't have an account? <span className="ml-2 text-light_primary dark:text-dark_primary">Sign up</span></p>
+            <Link to="/signup">
+                <p className='text-light_primary_text dark:text-dark_primary_text flex justify-center'>don't have an account? <span className="ml-2 text-light_primary dark:text-dark_primary">Sign up</span></p>
+            </Link>
         </div>
     )
 }

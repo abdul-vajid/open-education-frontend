@@ -2,14 +2,15 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
 import { setDarkTheme, setLightTheme } from '../../features/theme/themeSlice'
 import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
-import { clearLoggedUserData, setLoggedUserData } from '../../features/users/Common/userSlice'
+import { clearLoggedUserData, getUserProfile, setLoggedUserData } from '../../features/users/Common/userSlice'
 import useLogout from '../../app/hooks/useLogout'
 
 const UserDropDown: React.FC = () => {
     const { email, fullname } = useAppSelector(state => state.user)
     const { currentTheme } = useAppSelector(state => state.theme)
     const dispatch = useAppDispatch()
-    const axios = useAxiosPrivate()
+    // const axios = useAxiosPrivate()
+    const axiosInstance = useAxiosPrivate()
     const logout = useLogout()
 
     const handleTheme = (e: any) => {
@@ -20,20 +21,30 @@ const UserDropDown: React.FC = () => {
         }
     }
 
-    const fetchUserDetails = () => {
-        axios
-            .get("user/get-user")
-            .then((res) => {
-                if (res?.data?.success) dispatch(setLoggedUserData(res?.data?.data));
-            })
-            .catch(() => {
-                dispatch(clearLoggedUserData())
-            })
-    };
-
     useEffect(() => {
-        fetchUserDetails()
+        dispatch(getUserProfile(axiosInstance)).then((action) => {
+            if (action.payload.status === "rejected") {
+                dispatch(clearLoggedUserData())
+            }
+        }).catch(() => {
+            dispatch(clearLoggedUserData())
+        })
     }, [])
+
+    // const fetchUserDetails = () => {
+    //     axios
+    //         .get("user/get-user")
+    //         .then((res) => {
+    //             if (res?.data?.success) dispatch(setLoggedUserData(res?.data?.data));
+    //         })
+    //         .catch(() => {
+    //             dispatch(clearLoggedUserData())
+    //         })
+    // };
+
+    // useEffect(() => {
+    //     fetchUserDetails()
+    // }, [])
 
 
     return (

@@ -32,7 +32,7 @@ interface ResetPasswordRequest {
     token: string;
 }
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
     success: boolean,
     message: string,
     accessToken?: string;
@@ -54,7 +54,7 @@ export const resendOtpApi = (
     axios.get(`/auth/resend-otp/${payload.token}`);
 
 export const refreshTokenApi = (): Promise<ApiResponse<any>> =>
-    axios.get("/auth/refresh-token", { withCredentials: true });
+    axios.get("/auth/refresh-token", { withCredentials: true});
 
 export const logoutApi = (): Promise<ApiResponse<any>> =>
     axios.get("/auth/logout", { withCredentials: true });

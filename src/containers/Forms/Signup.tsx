@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import WFullPrimaryBtn from '../../components/Button/WFullPrimaryBtn'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
 import { useFormik } from 'formik'
@@ -20,7 +20,7 @@ const SignupForm: React.FC = () => {
     initialValues: {
       fullname: savedState.fullname ? savedState.fullname : "",
       email: savedState.email ? savedState.email : "",
-      phoneNumber: savedState.phoneNumber ?  savedState.phoneNumber : 0 ,
+      phoneNumber: savedState.phoneNumber ? savedState.phoneNumber : 0,
       role: role
     },
 
@@ -84,8 +84,9 @@ const SignupForm: React.FC = () => {
       <div className='my-10'>
         <WFullPrimaryBtn btnText='Continue' type='submit' onClick={formik.submitForm} />
       </div>
-
-      <p className='text-light_primary_text dark:text-dark_primary_text flex justify-center'>Already have an account? <span className="ml-2 text-light_primary dark:text-dark_primary">Sign in</span></p>
+      <Link to="/login">
+        <p className='text-light_primary_text dark:text-dark_primary_text flex justify-center cursor-pointer'>Already have an account? <span className="ml-2 text-light_primary dark:text-dark_primary">Sign in</span></p>
+      </Link>
     </div>
   )
 }

@@ -15,6 +15,7 @@ import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
 
 const VerifyEmail: React.FC = () => {
     const confirmToken = useAppSelector(state => state.auth.token)
+    const { email } = useAppSelector(state => state.auth)
     const user = useAppSelector(state => state.user)
     const dispatch = useAppDispatch()
     const [otpState, setOtpState] = useState('')
@@ -53,6 +54,22 @@ const VerifyEmail: React.FC = () => {
         },
     });
 
+    const [resendTimer, setResendTimer] = useState(55);
+
+    useEffect(() => {
+        let interval: number;
+
+        if (resendTimer > 0) {
+            interval = setInterval(() => {
+                setResendTimer((prevTimer) => prevTimer - 1);
+            }, 1000);
+        }
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [resendTimer]);
+
     const handleOtpChange = (value: string) => {
         formik.setFieldValue("otp", parseInt(value));
         setOtpState(value)
@@ -70,7 +87,7 @@ const VerifyEmail: React.FC = () => {
                 <BackArrowButton />
                 <span className='text-light_primary_text dark:text-dark_primary_text text-2xl font-semibold'>Verify OTP</span>
 
-                <InputField labelText="Entered Email" name='email' isDisabled inputType='email' value='email here' />
+                <InputField labelText="Entered Email" name='email' isDisabled inputType='email' value={email} />
 
                 <OtpInput
                     labelText='Enter Otp'
@@ -85,7 +102,7 @@ const VerifyEmail: React.FC = () => {
                 <div className='flex justify-between'>
                     <div className='items-baseline flex justify-start'>
                         <p className='text-sm font-thin pr-2 text-light_primary_text dark:text-dark_primary_text'>Resend OTP in</p>
-                        <span className='text-xl text-light_primary dark:text-dark_primary'>00.55</span>
+                        <span className='text-xl text-light_primary dark:text-dark_primary'>{`00:${resendTimer.toString().padStart(2, '0')}`}</span>
                     </div>
                     <span className='text-light_primary dark:text-dark_primary text-sm'>Resend OTP</span>
                 </div>

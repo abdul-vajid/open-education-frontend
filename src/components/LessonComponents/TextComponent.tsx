@@ -10,7 +10,7 @@ type TextComponentProps = {
 
 const TextComponent: React.FC<TextComponentProps> = ({ contentType, onChange, placeholder }) => {
     return (
-        <div className={`flex w-full 
+        <div className={`flex w-full my-3
         ${contentType === ContentTypes.ParagraphRight || contentType === ContentTypes.TitleRight || contentType === ContentTypes.SubtitleRight || contentType === ContentTypes.BlockquoteRight ? "justify-end" :
                 contentType === ContentTypes.ParagraphCenter || contentType === ContentTypes.TitleCenter || contentType === ContentTypes.SubtitleCenter || contentType === ContentTypes.BlockquoteCenter ? "justify-center" :
                     "justify-start"}`}>

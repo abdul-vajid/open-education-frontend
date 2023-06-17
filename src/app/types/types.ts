@@ -22,7 +22,20 @@ export type TCourse = {
     __v?: number;
 };
 
+export type ApiOperations = {
+    isLoading?: boolean
+    isGetCallError?: boolean
+    isPostCallError?: boolean
+    getCallErrorMsg?: string
+    postCallErrorMsg?: string
+}
+
 export type TFetchCourseExtra = {
     courseId: string
+    axiosInstance: AxiosInstance
+}
+
+export type TPostCallExtra = {
+    body: any
     axiosInstance: AxiosInstance
 }

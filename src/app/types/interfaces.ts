@@ -35,3 +35,9 @@ export interface ILessonWithoutContent {
     lessonDescription: string,
     lessonStatus: boolean
 }
+
+export interface ApiResponse {
+    success: boolean,
+    message: string,
+    data: any
+}

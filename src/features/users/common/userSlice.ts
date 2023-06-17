@@ -1,8 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { ApiOperations, TPostCallExtra } from '../../../app/types/types';
+import { AxiosInstance } from 'axios';
 
 
 type InitialState = {
-    accessToken: string,
+    accessToken?: string,
     role: string,
     userId: string,
     fullname: string,
@@ -11,8 +13,13 @@ type InitialState = {
     profilePicture?: string,
     profileTitle?: string,
     city?: string,
-    county?: string,
+    country?: string,
     about?: string,
+    isLoading: boolean,
+    isGetCallError: boolean,
+    isPostCallError: boolean,
+    getCallErrorMsg: string,
+    postCallErrorMsg: string,
 }
 const initialState: InitialState = {
     accessToken: '',
@@ -23,11 +30,25 @@ const initialState: InitialState = {
     userId: "",
     about: "",
     city: "",
-    county: "",
+    country: "",
     profilePicture: "",
-    profileTitle: ""
+    profileTitle: "",
+    isLoading: false,
+    isGetCallError: false,
+    isPostCallError: false,
+    getCallErrorMsg: "",
+    postCallErrorMsg: ""
 }
 
+export const updateProfile = createAsyncThunk('user/updateProfile', async ({ body, axiosInstance }: TPostCallExtra) => {
+    const axios = axiosInstance;
+    return await axios.patch('user/update-profile', body).then((response) => response.data.data)
+})
+
+export const getUserProfile = createAsyncThunk('user/getUserProfile', async (axiosInstance: AxiosInstance) => {
+    const axios = axiosInstance;
+    return await axios.get('user/get-user').then((response) => response.data.data)
+})
 
 
 const userSlice = createSlice({
@@ -43,11 +64,11 @@ const userSlice = createSlice({
             state.email = action.payload.email
             state.fullname = action.payload.fullname
             state.phoneNumber = action.payload.phoneNumber
-            state.about = action.payload.about || ''
-            state.city = action.payload.city || ''
-            state.county = action.payload.county || ''
-            state.profilePicture = action.payload.profilePicture || ''
-            state.profileTitle = action.payload.profileTitle || ''
+            state.about = action.payload.about ? action.payload.about : ''
+            state.city = action.payload.city ? action.payload.city : ''
+            state.country = action.payload.country ? action.payload.country : ''
+            state.profilePicture = action.payload.profilePicture ? action.payload.profilePicture : ''
+            state.profileTitle = action.payload.profileTitle ? action.payload.profileTitle : ''
         },
         clearLoggedUserData: (state) => {
             state.accessToken = '';
@@ -58,10 +79,59 @@ const userSlice = createSlice({
             state.userId = '';
             state.about = '';
             state.city = '';
-            state.county = '';
+            state.country = '';
             state.profilePicture = '';
             state.profileTitle = '';
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(updateProfile.pending, (state) => {
+            state.isLoading = true;
+            state.isPostCallError = false
+        })
+            .addCase(updateProfile.fulfilled, (state, action: PayloadAction<InitialState>) => {
+                state.isPostCallError = false
+                state.isLoading = false;
+                state.userId = action.payload.userId
+                state.role = action.payload.role
+                state.email = action.payload.email
+                state.fullname = action.payload.fullname
+                state.phoneNumber = action.payload.phoneNumber
+                state.about = action.payload.about ? action.payload.about : ''
+                state.city = action.payload.city ? action.payload.city : ''
+                state.country = action.payload.country ? action.payload.country : ''
+                state.profilePicture = action.payload.profilePicture ? action.payload.profilePicture : ''
+                state.profileTitle = action.payload.profileTitle ? action.payload.profileTitle : ''
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isPostCallError = true
+                state.postCallErrorMsg = action.error.message || 'Something went wrong';
+            })
+            .addCase(getUserProfile.pending, (state) => {
+                state.isLoading = true;
+                state.isGetCallError = false
+            })
+            .addCase(getUserProfile.fulfilled, (state, action: PayloadAction<InitialState>) => {
+                state.isLoading = false;
+                state.isGetCallError = false
+                state.userId = action.payload.userId
+                state.role = action.payload.role
+                state.email = action.payload.email
+                state.fullname = action.payload.fullname
+                state.phoneNumber = action.payload.phoneNumber
+                state.about = action.payload.about ? action.payload.about : ''
+                state.city = action.payload.city ? action.payload.city : ''
+                state.country = action.payload.country ? action.payload.country : ''
+                state.profilePicture = action.payload.profilePicture ? action.payload.profilePicture : ''
+                state.profileTitle = action.payload.profileTitle ? action.payload.profileTitle : ''
+            })
+            .addCase(getUserProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isGetCallError = true
+                state.getCallErrorMsg = action.error.message || 'Something went wrong';
+                userSlice.actions.clearLoggedUserData()
+            })
     },
 })
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackArrowButton from '../../../components/Button/BackArrowButton';
 import OutlineBtn from '../../../components/Button/OutlineBtn';
 import ComponentSelector from '../../../components/Button/ComponentSelector';
@@ -13,10 +13,10 @@ import PrimaryBtn from '../../../components/Button/PrimaryBtn';
 import TextArea from '../../../components/InputFiled/TextArea';
 import { useFormik } from 'formik';
 import { useAppSelector } from '../../../app/hooks/storeHooks';
-import { TCourse } from '../../../app/types/types';
 import { createLessonSchema } from '../../../utils/validations/createLessonSchema';
 import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate';
 import { useErrorToast, useSuccessToast } from '../../../app/hooks/toastHooks';
+import { CourseStatus } from '../../../app/types/enums';
 
 
 interface IContents {
@@ -26,30 +26,25 @@ interface IContents {
 }
 
 const CreateLesson: React.FC = () => {
-    const { courseId } = useParams();
     const navigate = useNavigate();
     const axios = useAxiosPrivate();
     const [contents, setContents] = useState<IContents[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [modalVisibility, setModalVisibility] = useState<boolean>(false);
-    const { courses } = useAppSelector(state => state.tutorCourses)
 
-    if (!courseId || courseId === undefined || courseId === null) {
-        navigate("/tutor/courses",
-            {
-                replace: true
-            });
-    }
+    const { course, courseDetailsAvailable } = useAppSelector(state => state.currentCourse)
 
-    const courseIndex: number = courses.unpublishedCourses.findIndex((course) => course._id === courseId);
-    const course: TCourse = courses.unpublishedCourses[courseIndex]
+    useEffect(() => {
+        if (!courseDetailsAvailable) {
+            navigate("/tutor/courses",
+                {
+                    replace: true
+                });
+        }
+    })
 
     let highestIndex: number = 0
-    if (course?.lessons.length > 0 && Array.isArray(course?.lessons)) {
-        highestIndex = course.lessons.reduce((maxIndex, lesson) => {
-            return lesson.lessonIndex > maxIndex ? lesson.lessonIndex : maxIndex;
-        }, 0)
-    }
+    if (course?.lessons.length > 0 && Array.isArray(course?.lessons)) highestIndex = course.lessons.length
 
     const handleAddingComponent = (component: ContentTypes, index: number | undefined) => {
         const newIndex = contents.length;
@@ -95,6 +90,15 @@ const CreateLesson: React.FC = () => {
 
         onSubmit: async (values) => {
             setIsLoading(true);
+
+            const filteredContents = contents.filter(element => {
+                return element.content && element.content !== "" && element.content !== null && element.content !== undefined;
+            })
+
+            if (filteredContents.length <= 0) {
+                formik.setFieldError("contents", "Please review the content and try again.")
+            }
+
             await axios.post('/course/create-lesson', {
                 courseId: values.courseId,
                 lessonTitle: values.lessonTitle,
@@ -110,7 +114,7 @@ const CreateLesson: React.FC = () => {
                         res.data.message && useSuccessToast({
                             message: res.data.message
                         });
-                        navigate(`/tutor/course/details/${course.status}/${course._id}/`,
+                        navigate(`/tutor/course/details/`,
                             {
                                 replace: true
                             });
@@ -143,6 +147,8 @@ const CreateLesson: React.FC = () => {
         useErrorToast({
             message: "Something went wrong. Please try again...",
         });
+    } else if (formik.errors){
+        console.log(formik.errors)
     }
 
 
@@ -184,7 +190,7 @@ const CreateLesson: React.FC = () => {
                             isMessage={formik.touched.description}
                             message={formik.errors.description}
                         />}
-                        rightButton={<PrimaryBtn isLoading={isLoading ? true : false} btnText='Upload Lesson' onClick={formik.submitForm} />}
+                        rightButton={<PrimaryBtn isLoading={isLoading ? true : false} loadingText="Uploading" btnText='Upload Lesson' onClick={formik.submitForm} />}
                         leftButton={<OutlineBtn btnText='Preview' />} paragraphOne='
                                 We highly recommend previewing your lesson before uploading it. Our lesson quality assurance bot will automatically remove any empty components, ensuring the highest quality for your lesson. Thank you for your understanding, and happy teaching!
             '

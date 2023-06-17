@@ -10,6 +10,7 @@ import OverView from "../features/users/Learner/OverView";
 import Courses from "../features/users/Tutor/Courses";
 import CourseDetails from "../features/users/Tutor/CourseDetails";
 import CreateLesson from "../features/users/Tutor/CreateLesson";
+import UserProfile from "../features/users/Common/UserProfile";
 
 const Router: React.FC = () => {
   return (
@@ -26,9 +27,11 @@ const Router: React.FC = () => {
       </Route>
       <Route path="/tutor" element={<TutorAuthorization />}>
         <Route path="/tutor" element={<TutorOverView />} />
+        <Route path="/tutor/profile" element={<UserProfile />} />
         <Route path="/tutor/courses" element={<Courses />} />
-        <Route path="/tutor/course/details/:status/:id" element={<CourseDetails />} />
-        <Route path="/tutor/course/:courseId/create-lesson" element={<CreateLesson/>} />
+        <Route path="/tutor/course/details" element={<CourseDetails />} />
+        <Route path="/tutor/course/create-lesson" element={<CreateLesson/>} />
+        <Route path="/tutor/course/:courseId/view" element={<CreateLesson/>} />
       </Route>
       <Route path="/" element={<Home />} />
       {/* <Route path="*" element={<NotFound />} /> */}
