@@ -2,14 +2,13 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
 import { setDarkTheme, setLightTheme } from '../../features/theme/themeSlice'
 import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
-import { clearLoggedUserData, getUserProfile, setLoggedUserData } from '../../features/users/Common/userSlice'
+import { clearLoggedUserData, getUserProfile } from '../../features/users/Common/userSlice'
 import useLogout from '../../app/hooks/useLogout'
 
 const UserDropDown: React.FC = () => {
     const { email, fullname } = useAppSelector(state => state.user)
     const { currentTheme } = useAppSelector(state => state.theme)
     const dispatch = useAppDispatch()
-    // const axios = useAxiosPrivate()
     const axiosInstance = useAxiosPrivate()
     const logout = useLogout()
 
@@ -30,22 +29,6 @@ const UserDropDown: React.FC = () => {
             dispatch(clearLoggedUserData())
         })
     }, [])
-
-    // const fetchUserDetails = () => {
-    //     axios
-    //         .get("user/get-user")
-    //         .then((res) => {
-    //             if (res?.data?.success) dispatch(setLoggedUserData(res?.data?.data));
-    //         })
-    //         .catch(() => {
-    //             dispatch(clearLoggedUserData())
-    //         })
-    // };
-
-    // useEffect(() => {
-    //     fetchUserDetails()
-    // }, [])
-
 
     return (
         <div className="fixed top-12 right-6 z-50 my-4 pr-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
