@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { SlOptions } from "react-icons/sl";
+import { IoMdClose } from "react-icons/io";
 import SingleUnpublishedCourse from '../../components/Card/SingleUnpublished'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
@@ -14,6 +16,7 @@ type NonPublishedCoursesProps = {
 
 const NonPublishedCourses: React.FC<NonPublishedCoursesProps> = ({ classNames }) => {
     const axiosInstance = useAxiosPrivate();
+    const [optionsVisibility, setOptionsVisibility] = useState<number>(-1)
     const navigate = useNavigate()
     const { loading } = useAppSelector(state => state.tutorCourses)
     const unpublishedCourses: TCourse[] = useAppSelector(state => state.tutorCourses.courses.unpublishedCourses)
@@ -22,13 +25,11 @@ const NonPublishedCourses: React.FC<NonPublishedCoursesProps> = ({ classNames })
     const handleClick = (course: TCourse) => {
         dispatch(clearCurrentCourse())
         if (course.lessons.length > 0) {
-            console.log("log 1 course.lesson.length is > 0")
             dispatch(fetchCourse({ courseId: course._id, axiosInstance })).then((result) => {
                 dispatch(setCurrentCourse(result.payload.courseDetails))
+                navigate('/tutor/course/details')
             })
-            navigate('/tutor/course/details')
         } else {
-            console.log("log 1 course.lesson.length else > 0")
             dispatch(clearCurrentCourse())
             dispatch(setCurrentCourse({
                 _id: course._id,
@@ -53,8 +54,17 @@ const NonPublishedCourses: React.FC<NonPublishedCoursesProps> = ({ classNames })
             <ul>
 
                 {unpublishedCourses?.map((course, i) => (
-                    <div className='hover:scale-95 hover:cursor-pointer' key={course._id} onClick={() => handleClick(course)}>
-                        <SingleUnpublishedCourse count={i + 1} course={course} />
+                    <div className='hover:cursor-pointer' key={course._id}>
+                        <SingleUnpublishedCourse
+                            count={i + 1} course={course}
+                            onClick={() => handleClick(course)}
+                            optionBtnComponent={
+                                <SlOptions className="text-xl"
+                                    onClick={() => {optionsVisibility === i ? setOptionsVisibility(-1) : setOptionsVisibility(i)}} />}
+                            isOptionClicked={optionsVisibility === i ? true : false}
+                            closeButton={<IoMdClose className="text-xl"
+                                onClick={() => {optionsVisibility !== i ? setOptionsVisibility(i) : setOptionsVisibility(-1)}} />}
+                        />
                     </div>
                 ))}
                 {

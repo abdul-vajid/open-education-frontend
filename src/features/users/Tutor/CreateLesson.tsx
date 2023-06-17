@@ -7,7 +7,7 @@ import { ContentTypes } from '../../../app/constants/enums';
 import TextComponent from '../../../components/LessonComponents/TextComponent';
 import FileUpload from '../../../components/InputFiled/FileUpload';
 import InputField from '../../../components/InputFiled/InputField';
-import DefaultModal from '../../../components/Modal/DefaultModal';
+import SaveLessonModal from '../../../components/Modal/SaveLessonModal';
 import { IoClose } from 'react-icons/io5';
 import PrimaryBtn from '../../../components/Button/PrimaryBtn';
 import TextArea from '../../../components/InputFiled/TextArea';
@@ -16,7 +16,6 @@ import { useAppSelector } from '../../../app/hooks/storeHooks';
 import { createLessonSchema } from '../../../utils/validations/createLessonSchema';
 import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate';
 import { useErrorToast, useSuccessToast } from '../../../app/hooks/toastHooks';
-import { CourseStatus } from '../../../app/types/enums';
 
 
 interface IContents {
@@ -164,7 +163,7 @@ const CreateLesson: React.FC = () => {
             </nav>
             {
                 modalVisibility && <div className='fixed top-50 flex justify-center md:left-40 lg:left-64 md:justify-start h-full w-full z-50'>
-                    <DefaultModal title='Ready to Upload Your Lesson?'
+                    <SaveLessonModal title='Ready to Upload Your Lesson?'
                         topComponentOne={<InputField
                             inputType='text'
                             labelText='Lesson Title'

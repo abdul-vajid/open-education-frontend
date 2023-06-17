@@ -13,6 +13,7 @@ const CourseDetails: React.FC = () => {
     const { course, courseDetailsAvailable } = useAppSelector(state => state.currentCourse)
     useEffect(() => {
         if (!courseDetailsAvailable) {
+            console.log("!courseDetailsAvailable")
             navigate("/tutor/courses",
                 {
                     replace: true

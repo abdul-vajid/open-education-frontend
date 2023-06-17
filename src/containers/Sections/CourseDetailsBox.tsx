@@ -1,14 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAppSelector } from '../../app/hooks/storeHooks'
 import { CourseStatus } from '../../app/types/enums'
 import PrimaryBtn from '../../components/Button/PrimaryBtn'
+import { useNavigate } from 'react-router-dom'
 
 type CourseDetailsBoxProps = {
     classNames?: string
 }
 
 const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames }) => {
-    const { course } = useAppSelector(state => state.currentCourse)
+    const navigate = useNavigate()
+    const { course, courseDetailsAvailable } = useAppSelector(state => state.currentCourse)
+
+    useEffect(() => {
+        if (!courseDetailsAvailable) {
+            navigate("/tutor/courses",
+                {
+                    replace: true
+                });
+        }
+    },[])
     return (
         <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full rounded-lg p-8`}>
             <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Course Details</span>

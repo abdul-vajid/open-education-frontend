@@ -31,7 +31,6 @@ const Router: React.FC = () => {
         <Route path="/tutor/courses" element={<Courses />} />
         <Route path="/tutor/course/details" element={<CourseDetails />} />
         <Route path="/tutor/course/create-lesson" element={<CreateLesson/>} />
-        <Route path="/tutor/course/:courseId/view" element={<CreateLesson/>} />
       </Route>
       <Route path="/" element={<Home />} />
       {/* <Route path="*" element={<NotFound />} /> */}
