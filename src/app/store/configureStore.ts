@@ -8,6 +8,7 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['theme', 'user', 'tutorCourses'],
+  expires: 7 * 24 * 60 * 60
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
