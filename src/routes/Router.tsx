@@ -11,6 +11,7 @@ import Courses from "../features/users/Tutor/Courses";
 import CourseDetails from "../features/users/Tutor/CourseDetails";
 import CreateLesson from "../features/users/Tutor/CreateLesson";
 import UserProfile from "../features/users/Common/UserProfile";
+import SetupValuation from "../features/users/Tutor/SetupValuation";
 
 const Router: React.FC = () => {
   return (
@@ -31,6 +32,7 @@ const Router: React.FC = () => {
         <Route path="/tutor/courses" element={<Courses />} />
         <Route path="/tutor/course/details" element={<CourseDetails />} />
         <Route path="/tutor/course/create-lesson" element={<CreateLesson/>} />
+        <Route path="/tutor/course/setup-valuation" element={<SetupValuation/>} />
       </Route>
       <Route path="/" element={<Home />} />
       {/* <Route path="*" element={<NotFound />} /> */}

@@ -6,10 +6,10 @@ const ViewLesson: React.FC = () => {
     const [sideMenu, setSideMenu] = useState(false)
    
     return (
-        <>
+        <div className="overflow-auto">
             <UserNavBar sideMenuController={() => setSideMenu(!sideMenu)} />
             <UserSidebar sideMenu={sideMenu} />
-        </>
+        </div>
     )
 }
 

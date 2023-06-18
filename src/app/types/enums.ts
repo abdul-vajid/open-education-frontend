@@ -6,5 +6,6 @@ export enum CourseStatus {
 
 export enum TutorRoutes {
     courseDetails = "/tutor/course/details",
-    createLesson = "/tutor/course/create-lesson"
+    createLesson = "/tutor/course/create-lesson",
+    setupValuation = "/tutor/course/setup-valuation"
 }

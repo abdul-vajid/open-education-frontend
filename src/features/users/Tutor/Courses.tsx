@@ -21,7 +21,7 @@ const Courses: React.FC = () => {
     }, [])
 
     return (
-        <>
+        <div className="overflow-auto">
             <UserNavBar sideMenuController={() => setSideMenu(!sideMenu)} />
             <UserSidebar sideMenu={sideMenu} />
             <div className="p-5 mt-20 md:ml-64 flex flex-col gap-5 lg:flex-row-reverse lg:gap-5" onClick={() => { setSideMenu(true) }}>
@@ -38,7 +38,7 @@ const Courses: React.FC = () => {
                 !createCourseVisibility && <FloatingActionBtn btnText='Create Course' onClick={() => setCreateCourseVisibility(true)} />
             }
 
-        </>
+        </div>
     )
 }
 

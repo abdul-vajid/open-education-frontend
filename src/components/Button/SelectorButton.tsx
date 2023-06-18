@@ -1,6 +1,6 @@
 import React from 'react'
 
-type ComponentSelectorProps = {
+type SelectorButtonProps = {
     id: string
     title: string,
     position: "left" | "center" | "right"
@@ -11,7 +11,7 @@ type ComponentSelectorProps = {
     disabled?: boolean
 }
 
-const ComponentSelector: React.FC<ComponentSelectorProps> = ({ id, title, description, iconComponent, onClick, isChecked, position, disabled }) => {
+const SelectorButton: React.FC<SelectorButtonProps> = ({ id, title, description, iconComponent, onClick, isChecked, position, disabled }) => {
     return (
         <div className='w-full flex items-center'>
             <input type="checkbox" id={id} value="" onClick={onClick} className="hidden peer" disabled={disabled ? true : false} />
@@ -34,4 +34,4 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({ id, title, descri
     )
 }
 
-export default ComponentSelector
+export default SelectorButton

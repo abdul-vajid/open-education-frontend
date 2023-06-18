@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import SingleLesson from '../../components/Card/SingleLesson'
 import emptyBox from "../../utils/assets/empty-box.png"
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks/storeHooks'
+import { SlOptions } from 'react-icons/sl'
+import { IoMdClose } from 'react-icons/io'
 
 type ListLessonsProps = {
     classNames?: string
@@ -11,6 +13,7 @@ type ListLessonsProps = {
 
 const ListLessons: React.FC<ListLessonsProps> = ({ classNames, courseId }) => {
     const navigate = useNavigate();
+    const [optionsVisibility, setOptionsVisibility] = useState<number>(-1)
     const { course, courseDetailsAvailable } = useAppSelector(state => state.currentCourse)
 
     useEffect(() => {
@@ -20,7 +23,7 @@ const ListLessons: React.FC<ListLessonsProps> = ({ classNames, courseId }) => {
                     replace: true
                 });
         }
-    },[])
+    }, [])
 
     return (
         <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full w-full lg:w-[60%] rounded-lg p-8`}>
@@ -32,8 +35,15 @@ const ListLessons: React.FC<ListLessonsProps> = ({ classNames, courseId }) => {
             </div>
             <ul>
                 {
-                    typeof course.lessons !== "string" ? course.lessons.map((lesson, index) => (
-                        <SingleLesson lesson={lesson} key={index} lessonIndex={index + 1} />
+                    typeof course.lessons !== "string" ? course.lessons.map((lesson, i) => (
+                        <SingleLesson lesson={lesson} key={i} lessonIndex={i + 1}
+                            optionBtnComponent={
+                                <SlOptions className="text-xl cursor-pointer"
+                                    onClick={() => { optionsVisibility === i ? setOptionsVisibility(-1) : setOptionsVisibility(i) }} />}
+                            isOptionClicked={optionsVisibility === i ? true : false}
+                            closeButton={<IoMdClose className="text-xl cursor-auto"
+                                onClick={() => { optionsVisibility !== i ? setOptionsVisibility(i) : setOptionsVisibility(-1) }} />}
+                        />
                     )) : <img src={emptyBox} alt="Empty Box" />
                 }
             </ul>
