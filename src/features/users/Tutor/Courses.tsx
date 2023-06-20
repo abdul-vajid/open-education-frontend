@@ -17,6 +17,7 @@ const Courses: React.FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        console.log("Course is fetching....")
         dispatch(fetchCourses(axiosInstance));
     }, [])
 

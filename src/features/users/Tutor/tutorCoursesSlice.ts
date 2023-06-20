@@ -30,30 +30,40 @@ const initialState: InitialState = {
 
 export const fetchCourses = createAsyncThunk('tutor/fetchCourses', async (extra: AxiosInstance) => {
     const axios = extra as AxiosInstance;
-    return await axios.get('/course/tutor/courses').then(response => response.data.data)
+    return await axios.get('/course/tutor/get-courses').then(response => response.data.data)
 })
 
 
 export const fetchCourse = createAsyncThunk('tutor/fetchCourse', async ({ courseId, axiosInstance }: TFetchCourseExtra) => {
     const axios = axiosInstance;
-    return await axios.get(`/course/tutor/course/${courseId}`).then(response => response.data.data)
+    return await axios.get(`/course/tutor/get-course/${courseId}`).then(response => response.data.data)
 })
 
 const tutorCoursesSlice = createSlice({
     name: 'tutor-courses',
     initialState,
-    reducers: {},
+    reducers: {
+        clearAllCourses: (state) => {
+            state.courses = {
+                unpublishedCourses: [],
+                publishedCourses: [],
+                unlistedCourses: [],
+            };
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchCourses.pending, (state) => {
             state.loading = true;
         });
         builder.addCase(fetchCourses.fulfilled, (state, action: PayloadAction<InitialState['courses']>) => {
             state.loading = false;
+            console.log("action.paylaod here fetchCourses.fulfilled",action.payload)
             state.courses = action.payload;
             state.error = '';
         });
         builder.addCase(fetchCourses.rejected, (state, action) => {
             state.loading = false;
+            console.log("fetchCourses.rejected")
             state.courses = {
                 unpublishedCourses: [],
                 publishedCourses: [],
@@ -88,3 +98,4 @@ const tutorCoursesSlice = createSlice({
 });
 
 export default tutorCoursesSlice.reducer;
+export const { clearAllCourses } = tutorCoursesSlice.actions
