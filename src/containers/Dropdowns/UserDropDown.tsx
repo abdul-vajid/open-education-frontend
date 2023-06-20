@@ -4,6 +4,7 @@ import { setDarkTheme, setLightTheme } from '../../features/theme/themeSlice'
 import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
 import { clearLoggedUserData, getUserProfile } from '../../features/users/Common/userSlice'
 import useLogout from '../../app/hooks/useLogout'
+import { clearAllCourses } from '../../features/users/Tutor/tutorCoursesSlice'
 
 const UserDropDown: React.FC = () => {
     const { email, fullname } = useAppSelector(state => state.user)
@@ -24,8 +25,10 @@ const UserDropDown: React.FC = () => {
         dispatch(getUserProfile(axiosInstance)).then((action) => {
             if (action.payload.status === "rejected") {
                 dispatch(clearLoggedUserData())
+                dispatch(clearAllCourses())
             }
         }).catch(() => {
+            dispatch(clearAllCourses())
             dispatch(clearLoggedUserData())
         })
     }, [])
