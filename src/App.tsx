@@ -12,10 +12,10 @@ const App: React.FC = () => {
     <div>
       <BrowserRouter>
         <ToastContainer />
-        <Theme/>
-        <Routes>
-          <Route path="/*" element={<Router />} />
-        </Routes>
+        <Theme />
+          <Routes>
+            <Route path="/*" element={<Router />} />
+          </Routes>
         <Background />
       </BrowserRouter>
     </div>

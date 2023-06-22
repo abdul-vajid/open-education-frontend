@@ -1,5 +1,4 @@
 import React from 'react'
-import SingleLesson from '../../components/Card/SingleLesson'
 
 type AddComponentProps = {
     classNames?: string

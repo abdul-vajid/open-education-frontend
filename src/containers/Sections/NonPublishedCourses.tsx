@@ -18,8 +18,8 @@ const NonPublishedCourses: React.FC<NonPublishedCoursesProps> = ({ classNames })
     const axiosInstance = useAxiosPrivate();
     const [optionsVisibility, setOptionsVisibility] = useState<number>(-1)
     const navigate = useNavigate()
-    const { loading } = useAppSelector(state => state.tutorCourses)
-    const unpublishedCourses: TCourse[] = useAppSelector(state => state.tutorCourses.courses.unpublishedCourses)
+    const { loading } = useAppSelector((state: any) => state.tutorCourses)
+    const unpublishedCourses: TCourse[] = useAppSelector((state: any) => state.tutorCourses.courses.unpublishedCourses)
     const dispatch = useAppDispatch()
 
     const handleClick = (course: TCourse) => {
@@ -49,7 +49,7 @@ const NonPublishedCourses: React.FC<NonPublishedCoursesProps> = ({ classNames })
         }
     }
     return (
-        <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full w-full rounded-lg p-8`}>
+        <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-auto w-full rounded-lg p-8`}>
             <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Unpublished Courses</span>
             <ul>
 
@@ -60,10 +60,10 @@ const NonPublishedCourses: React.FC<NonPublishedCoursesProps> = ({ classNames })
                             onClick={() => handleClick(course)}
                             optionBtnComponent={
                                 <SlOptions className="text-xl"
-                                    onClick={() => {optionsVisibility === i ? setOptionsVisibility(-1) : setOptionsVisibility(i)}} />}
+                                    onClick={() => { optionsVisibility === i ? setOptionsVisibility(-1) : setOptionsVisibility(i) }} />}
                             isOptionClicked={optionsVisibility === i ? true : false}
                             closeButton={<IoMdClose className="text-xl"
-                                onClick={() => {optionsVisibility !== i ? setOptionsVisibility(i) : setOptionsVisibility(-1)}} />}
+                                onClick={() => { optionsVisibility !== i ? setOptionsVisibility(i) : setOptionsVisibility(-1) }} />}
                         />
                     </div>
                 ))}

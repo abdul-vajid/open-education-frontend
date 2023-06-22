@@ -16,10 +16,11 @@ interface InputFieldProps {
     onClick?: any
     isInverted?: boolean
     classNames?: string 
+    step?: string
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
-    const { labelText, inputType, name, placeHolder, messageType, message, isMessage, isDisabled, onChange, onClick,value, isInverted, classNames } = props;
+    const { labelText, inputType, name, placeHolder, messageType, message, isMessage, isDisabled, step,onChange, onClick,value, isInverted, classNames } = props;
 
     let messageColorClass = '';
     switch (messageType) {
@@ -48,6 +49,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
             {
                 isDisabled ? <input
                     type={inputType}
+                    step={step}
                     name={name}
                     onChange={onChange}
                     onClick={onClick}

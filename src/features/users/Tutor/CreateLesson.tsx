@@ -12,10 +12,13 @@ import { IoClose } from 'react-icons/io5';
 import PrimaryBtn from '../../../components/Button/PrimaryBtn';
 import TextArea from '../../../components/InputFiled/TextArea';
 import { useFormik } from 'formik';
-import { useAppSelector } from '../../../app/hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks';
 import { createLessonSchema } from '../../../utils/validations/createLessonSchema';
 import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate';
 import { useErrorToast, useSuccessToast } from '../../../app/hooks/toastHooks';
+import { fetchCourse, fetchCourses } from './tutorCoursesSlice';
+import { setCurrentCourse } from './currentCourseSlice';
+
 
 
 interface IContents {
@@ -26,7 +29,8 @@ interface IContents {
 
 const CreateLesson: React.FC = () => {
     const navigate = useNavigate();
-    const axios = useAxiosPrivate();
+    const axiosInstance = useAxiosPrivate();
+    const dispatch = useAppDispatch()
     const [contents, setContents] = useState<IContents[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [modalVisibility, setModalVisibility] = useState<boolean>(false);
@@ -98,7 +102,7 @@ const CreateLesson: React.FC = () => {
                 formik.setFieldError("contents", "Please review the content and try again.")
             }
 
-            await axios.post('/course/create-lesson', {
+            await axiosInstance.post('/course/create-lesson', {
                 courseId: values.courseId,
                 lessonTitle: values.lessonTitle,
                 description: values.description,
@@ -113,10 +117,16 @@ const CreateLesson: React.FC = () => {
                         res.data.message && useSuccessToast({
                             message: res.data.message
                         });
+
+                        dispatch(fetchCourse({ courseId: course._id, axiosInstance })).then((result) => {
+                            dispatch(setCurrentCourse(result.payload.courseDetails))
+                        })
+
                         navigate(`/tutor/course/details/`,
                             {
                                 replace: true
                             });
+                            
                     } else {
                         useErrorToast({
                             message: res.data.message || "Something went wrong",
@@ -146,7 +156,7 @@ const CreateLesson: React.FC = () => {
         useErrorToast({
             message: "Something went wrong. Please try again...",
         });
-    } else if (formik.errors){
+    } else if (formik.errors) {
         console.log(formik.errors)
     }
 

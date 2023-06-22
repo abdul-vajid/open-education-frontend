@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useAppSelector } from '../../app/hooks/storeHooks'
-import { CourseStatus } from '../../app/types/enums'
+import { CourseStatus, TutorRoutes } from '../../app/types/enums'
 import PrimaryBtn from '../../components/Button/PrimaryBtn'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 type CourseDetailsBoxProps = {
     classNames?: string
@@ -19,7 +19,7 @@ const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames }) => {
                     replace: true
                 });
         }
-    },[])
+    }, [])
     return (
         <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full rounded-lg p-8`}>
             <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Course Details</span>
@@ -39,7 +39,9 @@ const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames }) => {
                         }
                         {
                             <div className='mt-5'>
-                                <PrimaryBtn btnText='Host your Course Now' />
+                                <Link to={TutorRoutes.hostCourse}>
+                                    <PrimaryBtn btnText='Host your Course Now' />
+                                </Link>
                             </div>
                         }
                     </div>

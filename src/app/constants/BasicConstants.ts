@@ -25,3 +25,26 @@ export const constLocation = {
     forgotPassword: "/forgot-password",
     resetPassword: "/reset-password"
 }
+
+export const fieldOfStudyList = [
+    "Art & Crafts",
+    "Business",
+    "Cooking",
+    "Design",
+    "Development",
+    "Engineering",
+    "Finance & Accounting",
+    "Health & Fitness",
+    "History",
+    "IT & Software",
+    "Language",
+    "Lifestyle",
+    "Marketing",
+    "Mathematics",
+    "Music",
+    "Personal Development",
+    "Photography",
+    "Science",
+    "Social Sciences",
+    "Writing",
+];

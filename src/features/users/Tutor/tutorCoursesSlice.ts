@@ -44,31 +44,22 @@ const tutorCoursesSlice = createSlice({
     initialState,
     reducers: {
         clearAllCourses: (state) => {
-            state.courses = {
-                unpublishedCourses: [],
-                publishedCourses: [],
-                unlistedCourses: [],
-            };
+            state.courses = initialState.courses
         }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCourses.pending, (state) => {
             state.loading = true;
+            state.courses = initialState.courses
         });
         builder.addCase(fetchCourses.fulfilled, (state, action: PayloadAction<InitialState['courses']>) => {
             state.loading = false;
-            console.log("action.paylaod here fetchCourses.fulfilled",action.payload)
             state.courses = action.payload;
             state.error = '';
         });
         builder.addCase(fetchCourses.rejected, (state, action) => {
             state.loading = false;
-            console.log("fetchCourses.rejected")
-            state.courses = {
-                unpublishedCourses: [],
-                publishedCourses: [],
-                unlistedCourses: [],
-            };
+            state.courses = initialState.courses
             state.error = action.error.message || 'Something went wrong';
         });
         builder.addCase(fetchCourse.pending, (state) => {
@@ -84,6 +75,7 @@ const tutorCoursesSlice = createSlice({
                     state.courses.unpublishedCourses[courseIndex].courseTitle = action.payload.courseDetails.courseTitle;
                     state.courses.unpublishedCourses[courseIndex].fieldOfStudy = action.payload.courseDetails.fieldOfStudy;
                     state.courses.unpublishedCourses[courseIndex].description = action.payload.courseDetails.description;
+                    state.courses.unpublishedCourses[courseIndex].valuationMode = action.payload?.courseDetails?.valuationMode;
                     state.courses.unpublishedCourses[courseIndex].prerequisites = action.payload.courseDetails.prerequisites;
                     state.courses.unpublishedCourses[courseIndex].lessons = action.payload.courseDetails.lessons;
                     state.courses.unpublishedCourses[courseIndex].reviews = action.payload.reviews;

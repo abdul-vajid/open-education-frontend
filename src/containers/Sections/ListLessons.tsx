@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react'
 import SingleLesson from '../../components/Card/SingleLesson'
 import emptyBox from "../../utils/assets/empty-box.png"
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks/storeHooks'
+import {  useAppSelector } from '../../app/hooks/storeHooks'
 import { SlOptions } from 'react-icons/sl'
 import { IoMdClose } from 'react-icons/io'
+import { TutorRoutes } from '../../app/types/enums'
 
 type ListLessonsProps = {
     classNames?: string
     courseId: string | undefined
+    navigationPath?: TutorRoutes
 }
 
-const ListLessons: React.FC<ListLessonsProps> = ({ classNames, courseId }) => {
+const ListLessons: React.FC<ListLessonsProps> = ({ classNames, courseId, navigationPath }) => {
     const navigate = useNavigate();
     const [optionsVisibility, setOptionsVisibility] = useState<number>(-1)
     const { course, courseDetailsAvailable } = useAppSelector(state => state.currentCourse)
@@ -36,14 +38,15 @@ const ListLessons: React.FC<ListLessonsProps> = ({ classNames, courseId }) => {
             <ul>
                 {
                     typeof course.lessons !== "string" ? course.lessons.map((lesson, i) => (
-                        <SingleLesson lesson={lesson} key={i} lessonIndex={i + 1}
-                            optionBtnComponent={
-                                <SlOptions className="text-xl cursor-pointer"
-                                    onClick={() => { optionsVisibility === i ? setOptionsVisibility(-1) : setOptionsVisibility(i) }} />}
-                            isOptionClicked={optionsVisibility === i ? true : false}
-                            closeButton={<IoMdClose className="text-xl cursor-auto"
-                                onClick={() => { optionsVisibility !== i ? setOptionsVisibility(i) : setOptionsVisibility(-1) }} />}
-                        />
+                            <SingleLesson lesson={lesson} key={i} lessonIndex={i + 1}
+                                navigationPath={navigationPath}
+                                optionBtnComponent={
+                                    <SlOptions className="text-xl cursor-pointer"
+                                        onClick={() => { optionsVisibility === i ? setOptionsVisibility(-1) : setOptionsVisibility(i) }} />}
+                                isOptionClicked={optionsVisibility === i ? true : false}
+                                closeButton={<IoMdClose className="text-xl cursor-auto"
+                                    onClick={() => { optionsVisibility !== i ? setOptionsVisibility(i) : setOptionsVisibility(-1) }} />}
+                            />
                     )) : <img src={emptyBox} alt="Empty Box" />
                 }
             </ul>

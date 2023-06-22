@@ -7,9 +7,10 @@ type FileUploadProps = {
     isSquareImage?: boolean;
     id: string;
     onChange: (fileData: any) => void;
+    externalErr?: string
 };
 
-const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id, onChange }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id, onChange, externalErr }) => {
     const [imageData, setImageData] = useState<string | null>(null);
     const [isHovered, setIsHovered] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -124,6 +125,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ description, isSquareImage, id,
                 )}
                 {
                     isError && <p className='mt-2 text-sm font-light text-red-600 dark:text-red-500'>{errMsg !== "" ? errMsg : "Something went wrong"}</p>
+                }
+                {
+                    !isError && <p className='mt-2 text-sm font-light text-red-600 dark:text-red-500'>{externalErr && externalErr}</p>
                 }
                 <input
                     ref={fileInputRef}

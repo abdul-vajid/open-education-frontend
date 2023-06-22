@@ -9,9 +9,9 @@ import PublicCourseListing from '../../containers/Sections/PublicCourseListing';
 
 const Home: React.FC = () => {
     const { scrollYProgress } = useScroll()
-    const yPosTestimonials = useTransform(scrollYProgress, [0, 0.5], ['100%', '0%']);
-    const yPosTimeline = useTransform(scrollYProgress, [0, 1], ['100%', '0%']);
-    const yPosPublicCourseListing = useTransform(scrollYProgress, [0, 1.5], ['100%', '0%']);
+    const yPosTestimonials = useTransform(scrollYProgress, [0, 0.3], ['100%', '0%']);
+    const yPosTimeline = useTransform(scrollYProgress, [0, 0.8], ['100%', '0%']);
+    const yPosPublicCourseListing = useTransform(scrollYProgress, [0, 1.3], ['100%', '0%']);
     const opacity = useTransform(scrollYProgress, [1.2, 1], [0, 1],);
 
     return (

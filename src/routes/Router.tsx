@@ -6,27 +6,33 @@ import TutorAuthorization from "./Authorization/TutorAuthorization";
 import TutorOverView from "../features/users/Tutor/OverView";
 import LearnerAuthorization from "./Authorization/LearnerAuthorization";
 import OverView from "../features/users/Learner/OverView";
-import Courses from "../features/users/Tutor/Courses";
+import TutorCoursesPage from "../features/users/Tutor/Courses";
+import LearnerCoursesPage from "../features/users/Learner/Courses";
 import CourseDetails from "../features/users/Tutor/CourseDetails";
 import CreateLesson from "../features/users/Tutor/CreateLesson";
 import UserProfile from "../features/users/Common/UserProfile";
 import SetupValuation from "../features/users/Tutor/SetupValuation";
 import NotFound from "./NotFound";
 import CheckLoginStatus from "./Authorization/CheckLoginStatus";
+import LessonbasedQuizCreation from "../features/users/Tutor/LessonbasedQuizCreation";
+import HostCourse from "../features/users/Tutor/HostCourse";
 
 const Router: React.FC = () => {
   return (
     <Routes>
       <Route path="/learner" element={<LearnerAuthorization />}>
         <Route path="/learner" element={<OverView />} />
+        <Route path="/learner/courses" element={<LearnerCoursesPage />} />
       </Route>
       <Route path="/tutor" element={<TutorAuthorization />}>
         <Route path="/tutor" element={<TutorOverView />} />
         <Route path="/tutor/profile" element={<UserProfile />} />
-        <Route path="/tutor/courses" element={<Courses />} />
+        <Route path="/tutor/courses" element={<TutorCoursesPage />} />
         <Route path="/tutor/course/details" element={<CourseDetails />} />
         <Route path="/tutor/course/create-lesson" element={<CreateLesson />} />
         <Route path="/tutor/course/setup-valuation" element={<SetupValuation />} />
+        <Route path="/tutor/course/create-quiz" element={<LessonbasedQuizCreation />} />
+        <Route path="/tutor/course/host" element={<HostCourse />} />
       </Route>
       {/* <Route path="/admin" element={<AdminAuthorization />}/> */}
       {/* <Route path="/learner" element={<LearnerAuthorization />}/> */}

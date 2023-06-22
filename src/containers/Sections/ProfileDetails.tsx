@@ -18,7 +18,6 @@ type ProfileDetailsProps = {
 
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ classNames }) => {
     const user = useAppSelector(state => state.user)
-    console.log("user from slice state", user)
     const axiosInstance = useAxiosPrivate();
     const dispatch = useAppDispatch()
     const [isEditing, setAsEditing] = useState(false)
@@ -42,7 +41,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ classNames }) => {
                     useSuccessToast({ message: 'Personal Infromation upadated' })
                     setAsEditing(false)
                 }
-            }).catch((error) => {
+            }).catch(() => {
                 useErrorToast({
                     message: user?.postCallErrorMsg || "Something went wrong",
                 });

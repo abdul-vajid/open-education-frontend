@@ -9,7 +9,6 @@ import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
 import { useFormik } from 'formik'
 import { useAppDispatch } from '../../app/hooks/storeHooks'
 import { fetchCourses } from '../../features/users/Tutor/tutorCoursesSlice'
-import { CourseStatus } from '../../app/types/enums';
 
 type CreateCourseProps = {
     classNames?: string
@@ -47,7 +46,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
                             message: res.data.message
                         });
                         dispatch(fetchCourses(axios));
-                        navigate(`/tutor/course/details/${CourseStatus.Draft}/${res.data.data.courseId}`,
+                        navigate(`/tutor/course/details/`,
                             {
                                 replace: true
                             });
@@ -69,7 +68,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
     });
 
     return (
-        <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-full w-full rounded-lg p-8 mb-5`}>
+        <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-auto w-full rounded-lg p-8 mb-5`}>
             <div className='flex justify-between'>
                 <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Create Course</span>
                 {
@@ -95,7 +94,8 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
                 placeHolder='eg: Digital marketing'
                 messageType='error'
                 onChange={formik.handleChange}
-                message={formik.errors.courseTitle}
+                onBlur={formik.handleBlur}
+                message={formik.errors.fieldOfStudy}
                 value={formik.values.fieldOfStudy}
                 isMessage={formik.touched.fieldOfStudy}
             />

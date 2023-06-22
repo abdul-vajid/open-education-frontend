@@ -19,7 +19,7 @@ const SelectorButton: React.FC<SelectorButtonProps> = ({ id, title, description,
                 ${position === "right" ? "justify-end text-right" :
                     position === "center" ? "justify-center text-center" :
                         "justify-start text-left"}
-                inline-flex items-center w-full p-5 text-light_primary_text dark:text-dark_primary_text bg-light_secondary_bg  dark:bg-dark_secondary_bg rounded-lg cursor-pointer ${isChecked ? "peer-checked:ring-1 peer-checked:ring-light_primary" : ""}`}>
+                inline-flex items-center w-full p-5 text-light_primary_text dark:text-dark_primary_text bg-light_secondary_bg  dark:bg-dark_secondary_bg rounded-lg cursor-pointer ${isChecked === true ? "ring-1 peer-checked:ring-light_primary" : ""}`}>
                 <div className="block">
                     <div className='flex align-middle'>
                         {

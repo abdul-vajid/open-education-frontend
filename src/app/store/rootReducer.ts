@@ -5,6 +5,8 @@ import authReducer from '../../features/Public/authSlice';
 import userReducer from '../../features/users/Common/userSlice';
 import tutorCoursesReducer from '../../features/users/Tutor/tutorCoursesSlice';
 import currentCourseReducer from '../../features/users/Tutor/currentCourseSlice';
+import currentLessonReducer from '../../features/users/Tutor/currentLessonSlice';
+import setUpValuationReducer from '../../features/users/Tutor/setUpValuationSlice';
 
 
 const rootReducer = combineReducers({
@@ -13,7 +15,9 @@ const rootReducer = combineReducers({
     auth: authReducer,
     user: userReducer,
     tutorCourses: tutorCoursesReducer,
-    currentCourse: currentCourseReducer
+    currentCourse: currentCourseReducer,
+    currentLesson: currentLessonReducer,
+    setUpValuation: setUpValuationReducer,
 });
 
 export default rootReducer;

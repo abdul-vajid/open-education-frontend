@@ -33,11 +33,19 @@ export interface ILessonWithoutContent {
     lessonIndex: number,
     lessonTitle: string,
     lessonDescription: string,
-    lessonStatus: boolean
+    lessonStatus: string
 }
 
 export interface ApiResponse {
     success: boolean,
     message: string,
     data: any
+}
+
+export interface IQuestion {
+    question: string;
+    correctAnswer: string;
+    optionA: string;
+    optionB: string;
+    optionC: string;
 }

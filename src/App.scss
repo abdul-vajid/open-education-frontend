@@ -5,13 +5,44 @@
   /* Firefox */
 }
 
-textarea {
+* {
   /* Hide the default scrollbar */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer and Microsoft Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer and Microsoft Edge */
 
   /* Hide the scrollbar dragger */
   &::-webkit-scrollbar {
-    display: none; /* Safari and Google Chrome */
+    display: none;
+    /* Safari and Google Chrome */
+  }
+}
+
+textarea {
+  /* Hide the default scrollbar */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer and Microsoft Edge */
+
+  /* Hide the scrollbar dragger */
+  &::-webkit-scrollbar {
+    display: none;
+    /* Safari and Google Chrome */
+  }
+}
+
+select {
+  /* Hide the default scrollbar */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer and Microsoft Edge */
+
+  /* Hide the scrollbar dragger */
+  &::-webkit-scrollbar {
+    display: none;
+    /* Safari and Google Chrome */
   }
 }

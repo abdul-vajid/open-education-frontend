@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ApiOperations, TPostCallExtra } from '../../../app/types/types';
+import { TPostCallExtra } from '../../../app/types/types';
 import { AxiosInstance } from 'axios';
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TCourse } from '../../app/types/types'
 import UnpublishedCourseOptions from '../../containers/Dropdowns/UnpublishedCourseOptions'
 
@@ -14,8 +14,7 @@ type SingleUnpublishedCourseProps = {
 
 const SingleUnpublishedCourse: React.FC<SingleUnpublishedCourseProps> = ({ count, course, onClick, isOptionClicked,closeButton, optionBtnComponent }) => {
     return (
-        <li>
-            <div className='w-full p-4 mt-5 h-auto rounded-md bg-light_secondary_bg dark:bg-dark_secondary_bg'>
+            <div className='w-full h-full p-4 mt-5 rounded-md bg-light_secondary_bg dark:bg-dark_secondary_bg' style={{ overflow: 'visible' }}>
                 <div className='flex justify-between'>
                     <div className='flex gap-5' onClick={onClick}>
                         <div className='px-6 py-4 flex items-center justify-center rounded-md bg-light_primary_bg dark:bg-dark_primary_bg'>
@@ -33,12 +32,12 @@ const SingleUnpublishedCourse: React.FC<SingleUnpublishedCourseProps> = ({ count
                     </div>
                 </div>
                 {
-                    isOptionClicked && <div className='relative h-[10px] z-20 flex justify-end mt-[-10px]'>
+                    isOptionClicked && <div className='relative z-20 h-[10px] flex justify-end mt-[-10px]'>
                         <UnpublishedCourseOptions course={course}/>
                     </div>
                 }
+
             </div>
-        </li>
     )
 }
 
