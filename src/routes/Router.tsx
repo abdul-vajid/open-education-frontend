@@ -23,6 +23,7 @@ const Router: React.FC = () => {
       <Route path="/learner" element={<LearnerAuthorization />}>
         <Route path="/learner" element={<OverView />} />
         <Route path="/learner/courses" element={<LearnerCoursesPage />} />
+        <Route path="/learner/profile" element={<UserProfile />} />
       </Route>
       <Route path="/tutor" element={<TutorAuthorization />}>
         <Route path="/tutor" element={<TutorOverView />} />

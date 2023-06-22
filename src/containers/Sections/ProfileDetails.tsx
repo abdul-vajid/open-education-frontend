@@ -29,18 +29,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ classNames }) => {
             phoneNumber: user.phoneNumber,
             country: user.country,
             city: user.city,
-            about: user.about
+            about: user.about,
+            profilePicture: user.profilePicture
         },
 
         validationSchema: updateUserProfileSchema,
 
         onSubmit: async (values) => {
-            dispatch(updateProfile({ body: values, axiosInstance })).then((action) => {
-                const response = action.payload;
-                if (response.status === "fulfilled") {
-                    useSuccessToast({ message: 'Personal Infromation upadated' })
-                    setAsEditing(false)
-                }
+            dispatch(updateProfile({ body: values, axiosInstance })).then(() => {
+                useSuccessToast({ message: 'Personal Infromation upadated' })
+                setAsEditing(false)
             }).catch(() => {
                 useErrorToast({
                     message: user?.postCallErrorMsg || "Something went wrong",
@@ -49,13 +47,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ classNames }) => {
         },
     });
     const handleImageUpload = (imageUrl: string) => {
-        console.log("imageurl inside handleImageUpload", imageUrl)
-        dispatch(updateProfile({ body: imageUrl, axiosInstance }))
-    }
+        formik.setValues((prevState) => ({
+            ...prevState,
+            profilePicture: imageUrl
+        }));
+        setAsEditing(true)
+    };
 
     useEffect(() => {
         dispatch(getUserProfile(axiosInstance))
-    },[])
+    }, [])
 
 
     return (
@@ -64,11 +65,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ classNames }) => {
                 <span className='text-light_primary_text dark:text-dark_primary_text text-lg md:text-xl lg:text-2xl font-semibold'>Personal Information</span>
                 <span className='text-xs text-light_secondary_text dark:text-dark_secondary_text'>This Information will be displayed publicly, so be careful what you share. </span>
             </div>
-            <span className='text-md text-light_secondary_text dark:text-dark_secondary_text'>Profile Picture</span>
+            <span className='text-md text-light_secondary_text dark:text-dark_secondary_text '>Profile Picture</span>
             {
-                user.profilePicture ? <img src={user.profilePicture} alt={`${user.fullname}'s profile picture`} className='w-64 h-64 rounded-lg' /> :
+                (user.profilePicture && !isEditing) ? <img src={user.profilePicture} alt={`${user.fullname}'s profile picture`} className='w-64 h-64 rounded-lg mt-2' /> :
                     <div className='flex justify-start mb-8'>
-                        <FileUpload isSquareImage={true} id='profilePicture' onChange={(imageUrl) => handleImageUpload(imageUrl)} />
+                        <FileUpload externalErr={formik.errors.profilePicture}  isSquareImage={true} id='profilePicture'  onChange={(imageUrl) => handleImageUpload(imageUrl)}/>
                     </div>
             }
 

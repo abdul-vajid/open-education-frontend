@@ -42,7 +42,12 @@ const initialState: InitialState = {
 
 export const updateProfile = createAsyncThunk('user/updateProfile', async ({ body, axiosInstance }: TPostCallExtra) => {
     const axios = axiosInstance;
-    return await axios.patch('user/update-profile', body).then((response) => response.data.data)
+    try {
+        const response = await axios.patch('user/update-profile', body)
+        return response.data.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || 'Something went wrong');
+    }
 })
 
 export const getUserProfile = createAsyncThunk('user/getUserProfile', async (axiosInstance: AxiosInstance) => {
