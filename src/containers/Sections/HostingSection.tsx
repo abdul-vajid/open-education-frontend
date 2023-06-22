@@ -86,7 +86,7 @@ const HostingSection: React.FC<HostingSectionProps> = ({ classNames }) => {
                 <div>
                     <span className='text-md text-light_secondary_text dark:text-dark_secondary_text'>Cover Picture</span>
                     <div className='flex justify-start mb-8'>
-                        <FileUpload externalErr={formik.errors.imageUrl} isSquareImage={true} id='profilePicture' onChange={(imageUrl) => handleImageUpload(imageUrl)} />
+                        <FileUpload externalErr={formik.errors.imageUrl} isSquareImage={true} id='CourseImage' onChange={(imageUrl) => handleImageUpload(imageUrl)} />
                     </div>
                 </div>
 
