@@ -1,5 +1,5 @@
 import React from 'react'
-import { TPublishedCourse } from '../../app/types/types'
+import { TPublishedCourse } from '../../../app/types/types'
 import notFoundImage from "../../utils/assets/image-not-found.png"
 import { HiPencilSquare } from "react-icons/hi2";
 
@@ -21,7 +21,7 @@ const SingleCourse: React.FC<SingleCourseProps> = ({ course, onClick}) => {
                         <div className='flex flex-row justify-between'>
                             <div className='flex flex-col gap-3'>
                                 <span className='text-md lg:text-xl text-light_primary_text dark:text-dark_primary_text'>{course.courseTitle}</span>
-                                <div className='flex flex-row justify-start items-center gap-2'><HiPencilSquare className='text-sm text-light_secondary_text dark:text-dark_secondary_text'/><span className='text-sm text-light_secondary_text dark:text-dark_secondary_text'>{course.authorDetails.about}</span></div>
+                                <div className='flex flex-row justify-start items-center gap-2'><HiPencilSquare className='text-sm text-light_secondary_text dark:text-dark_secondary_text'/><span className='text-sm text-light_secondary_text dark:text-dark_secondary_text'>{course.authorDetails.fullname}</span></div>
                                 <span className='text-sm text-light_secondary_text dark:text-dark_secondary_text'>Filed of study : {course.fieldOfStudy}</span>
                                 <span className='text-sm text-light_secondary_text dark:text-dark_secondary_text'>{course.enrolledCount < 100 ? "Below 100 Enrolls" : course.enrolledCount >= 100 && course.enrolledCount < 500 ? "100+ Enrolls" : "500+ Enrolls"}</span>
                             </div>

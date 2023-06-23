@@ -7,6 +7,7 @@ import tutorCoursesReducer from '../../features/users/Tutor/tutorCoursesSlice';
 import currentCourseReducer from '../../features/users/Tutor/currentCourseSlice';
 import currentLessonReducer from '../../features/users/Tutor/currentLessonSlice';
 import setUpValuationReducer from '../../features/users/Tutor/setUpValuationSlice';
+import publicCurrentReducer from '../../features/Public/publicCurrentSlice';
 
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     currentCourse: currentCourseReducer,
     currentLesson: currentLessonReducer,
     setUpValuation: setUpValuationReducer,
+    publicCurrent: publicCurrentReducer
 });
 
 export default rootReducer;

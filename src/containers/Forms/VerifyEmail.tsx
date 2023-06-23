@@ -10,11 +10,13 @@ import { useNavigate } from 'react-router-dom'
 import { verifyEmailApi } from '../../app/api/authApi'
 import { setAccessToken, setLoggedUserData } from '../../features/users/Common/userSlice'
 import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
+import { clearAuthInfo } from '../../features/Public/authSlice'
 
 
 
 const VerifyEmail: React.FC = () => {
     const confirmToken = useAppSelector(state => state.auth.token)
+    const {} = useAppSelector(state => state.auth)
     const { email } = useAppSelector(state => state.auth)
     const user = useAppSelector(state => state.user)
     const dispatch = useAppDispatch()
@@ -37,6 +39,7 @@ const VerifyEmail: React.FC = () => {
                         useSuccessToast(response.data.message)
                         dispatch(setLoggedUserData(response.data.data));
                         dispatch(setAccessToken(response.data.accessToken))
+                        dispatch(clearAuthInfo())
                         navigate(`/${user.role}`,
                             {
                                 replace: true

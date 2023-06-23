@@ -4,6 +4,7 @@ import SearchField from '../../components/InputFiled/SearchField'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
 import { fetchPublicCourses } from '../../features/Public/publicSlice'
 import LoaderCard from '../../components/Card/LoaderCard'
+import ListEmpty from '../../components/ErrorCards/ListEmpty'
 
 const PublicCourseListing: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -12,7 +13,6 @@ const PublicCourseListing: React.FC = () => {
     useEffect(() => {
         dispatch(fetchPublicCourses())
     }, [])
-
 
 
     return (
@@ -39,13 +39,14 @@ const PublicCourseListing: React.FC = () => {
                                 <span className='text-red-500 text-lg text content-center'></span>
                             </li>
                         }
-                        {
-                          isCoursesFetched === true && publicCourses.map((course) => (
-                                <li className="py-3 sm:py-4">
-                                    <SingleCourse course={course} key={course.courseId} />
-                                </li>
-                            ))
-                        }
+                        {(isCoursesFetched === true && Array.isArray(publicCourses)) ? publicCourses.map((course) => (
+                            <div>
+                                {
+                                    course.courseTitle !== "" && <SingleCourse course={course} />
+                                }
+                            </div>
+
+                        )) : isFetchingCourses ? <LoaderCard /> : <ListEmpty message='Courses not found' />}
 
                     </ul>
                 </div>

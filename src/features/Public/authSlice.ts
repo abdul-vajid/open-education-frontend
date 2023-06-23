@@ -35,8 +35,11 @@ const authSlice = createSlice({
         setConfirmationToken: (state, action: PayloadAction<string>) => {
             state.token = action.payload
         },
+        clearAuthInfo: (state) => {
+            state = initialState
+        }
     }
 })
 
 export default authSlice.reducer
-export const { setUserInfo, setConfirmationToken } = authSlice.actions
+export const { setUserInfo, setConfirmationToken, clearAuthInfo } = authSlice.actions

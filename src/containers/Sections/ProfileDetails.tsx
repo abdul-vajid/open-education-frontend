@@ -77,7 +77,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ classNames }) => {
                 {!isEditing ? <BiEdit /> : <CgClose />}
                 <span className='text-xs'>{!isEditing ? "Edit Info" : "Cancel"}</span>
             </div>
-            <div className="flex justify-between w-full gap-5">
+            <div className="flex flex-col md:flex-row justify-between w-full gap-0 md:gap-3 lg:gap-5">
                 <div className="flex-1">
                     <InputField
                         inputType="text"
@@ -109,7 +109,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ classNames }) => {
                     />
                 </div>
             </div>
-            <div className="flex justify-between w-full gap-5">
+            <div className="flex flex-col md:flex-row justify-between w-full gap-0 md:gap-3 lg:gap-5">
                 <div className="flex-1">
                     <InputField inputType="text" labelText="Email" name="email" isDisabled={true} value={user.email} message='Email cannot be changed' isMessage={true} messageType='info' />
                 </div>

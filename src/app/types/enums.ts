@@ -17,3 +17,7 @@ export enum TutorRoutes {
     createLessonbasedQuiz = "/tutor/course/create-quiz",
     hostCourse = "/tutor/course/host",
 }
+export enum LearnerRoutes {
+    courses = "/learner/courses",
+    courseDetails = "/learner/course/details",
+}

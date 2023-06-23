@@ -9,6 +9,7 @@ import OverView from "../features/users/Learner/OverView";
 import TutorCoursesPage from "../features/users/Tutor/Courses";
 import LearnerCoursesPage from "../features/users/Learner/Courses";
 import CourseDetails from "../features/users/Tutor/CourseDetails";
+import LeanerCourseDetails from "../features/users/Learner/CourseDetails";
 import CreateLesson from "../features/users/Tutor/CreateLesson";
 import UserProfile from "../features/users/Common/UserProfile";
 import SetupValuation from "../features/users/Tutor/SetupValuation";
@@ -22,8 +23,9 @@ const Router: React.FC = () => {
     <Routes>
       <Route path="/learner" element={<LearnerAuthorization />}>
         <Route path="/learner" element={<OverView />} />
-        <Route path="/learner/courses" element={<LearnerCoursesPage />} />
         <Route path="/learner/profile" element={<UserProfile />} />
+        <Route path="/learner/courses" element={<LearnerCoursesPage />} />
+        <Route path="/learner/course/details" element={<LeanerCourseDetails />} />
       </Route>
       <Route path="/tutor" element={<TutorAuthorization />}>
         <Route path="/tutor" element={<TutorOverView />} />
