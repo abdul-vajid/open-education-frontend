@@ -5,7 +5,7 @@ import ListCourses from '../../../containers/Sections/ListCourses'
 import FloatingActionBtn from '../../../components/Button/FloatingActionBtn'
 import CreateCourse from '../../../containers/Forms/CreateCourse'
 import NonPublishedCourses from '../../../containers/Sections/NonPublishedCourses'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
+import { useAppDispatch } from '../../../app/hooks/storeHooks'
 import { fetchCourses } from './tutorCoursesSlice'
 import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate'
 import { IoClose } from 'react-icons/io5'
@@ -13,7 +13,6 @@ import { IoClose } from 'react-icons/io5'
 const Courses: React.FC = () => {
     const [sideMenu, setSideMenu] = useState(false)
     const [createCourseVisibility, setCreateCourseVisibility] = useState(false)
-    const { publishedCourses } = useAppSelector(state => state.tutorCourses.courses)
 
     const axiosInstance = useAxiosPrivate();
     const dispatch = useAppDispatch()
@@ -33,7 +32,7 @@ const Courses: React.FC = () => {
                     }
                     <NonPublishedCourses />
                 </div>
-                <ListCourses courses={publishedCourses} classNames='lg:w-[70%]'/>
+                <ListCourses classNames='lg:w-[70%]'/>
             </div>
 
             {

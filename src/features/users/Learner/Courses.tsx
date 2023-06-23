@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import UserSidebar from '../../../containers/Navbars/UserSidebar'
 import UserNavBar from '../../../containers/Navbars/UserNavBar'
-import ListCourses from '../../../containers/Sections/ListCourses'
+import ListCourses from '../../../containers/Sections/learner/ListCourses'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
 import { fetchPublicCourses } from '../../Public/publicSlice'
 import EnrolledCourses from '../../../containers/Sections/EnrolledCourses'

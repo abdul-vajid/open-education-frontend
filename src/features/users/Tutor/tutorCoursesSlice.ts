@@ -1,15 +1,18 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { TCourse as Course, TFetchCourseExtra } from '../../../app/types/types';
+import { TCourse as Course, TFetchCourseExtra, TPublishedCourse } from '../../../app/types/types';
 import { IPayloadActionFetchCourse } from '../../../app/types/interfaces';
 import { CourseStatus } from '../../../app/types/enums';
 
 type InitialState = {
     loading: boolean;
     courseFetching: boolean
+    courseFeteched: boolean
+    coursesFetching: boolean
+    coursesFeteched: boolean
     courses: {
         unpublishedCourses: Course[];
-        publishedCourses: Course[];
+        publishedCourses: TPublishedCourse[];
         unlistedCourses: Course[];
     };
     error: string;
@@ -19,6 +22,9 @@ type InitialState = {
 const initialState: InitialState = {
     loading: false,
     courseFetching: false,
+    courseFeteched: false,
+    coursesFetching: false,
+    coursesFeteched: false,
     courses: {
         unpublishedCourses: [],
         publishedCourses: [],
@@ -49,16 +55,23 @@ const tutorCoursesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCourses.pending, (state) => {
+            console.log("fetchCourses.pending")
+            state.coursesFetching = true
             state.loading = true;
             state.courses = initialState.courses
         });
         builder.addCase(fetchCourses.fulfilled, (state, action: PayloadAction<InitialState['courses']>) => {
+            console.log("fetchCourses.fulfilled",action.payload)
             state.loading = false;
+            state.coursesFetching = false
+            state.coursesFeteched = true
             state.courses = action.payload;
             state.error = '';
         });
         builder.addCase(fetchCourses.rejected, (state, action) => {
+            console.log("fetchCourses.rejected",action.error)
             state.loading = false;
+            state.coursesFetching = false
             state.courses = initialState.courses
             state.error = action.error.message || 'Something went wrong';
         });
