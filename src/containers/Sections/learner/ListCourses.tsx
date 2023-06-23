@@ -21,7 +21,7 @@ const ListCourses: React.FC<ListCoursesProps> = ({ classNames, courses, title, i
     const navigate = useNavigate()
 
     const handleSingleCourseClick = (courseId: string)=> {
-        dispatch(fetchPublicCourse(courseId)).then((respone)=> {
+        dispatch(fetchPublicCourse(courseId)).then(()=> {
             navigate(LearnerRoutes.courseDetails)
         })
     }

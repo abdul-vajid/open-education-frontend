@@ -11,12 +11,13 @@ import { verifyEmailApi } from '../../app/api/authApi'
 import { setAccessToken, setLoggedUserData } from '../../features/users/Common/userSlice'
 import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
 import { clearAuthInfo } from '../../features/Public/authSlice'
+import axios from '../../app/config/apiConfig'
 
 
 
 const VerifyEmail: React.FC = () => {
     const confirmToken = useAppSelector(state => state.auth.token)
-    const {} = useAppSelector(state => state.auth)
+    const { } = useAppSelector(state => state.auth)
     const { email } = useAppSelector(state => state.auth)
     const user = useAppSelector(state => state.user)
     const dispatch = useAppDispatch()
@@ -57,7 +58,7 @@ const VerifyEmail: React.FC = () => {
         },
     });
 
-    const [resendTimer, setResendTimer] = useState(55);
+    const [resendTimer, setResendTimer] = useState(59);
 
     useEffect(() => {
         let interval: number;
@@ -72,6 +73,19 @@ const VerifyEmail: React.FC = () => {
             clearInterval(interval);
         };
     }, [resendTimer]);
+
+    const resendOtp = async() => {
+        try {
+            await axios.get(`/auth/resend-otp/${confirmToken}`).then(() => {
+                setResendTimer(59)
+                useSuccessToast({ message: "OTP has been sent to your mail" })
+            })
+        } catch (error: any) {
+            console.log(error)
+            useErrorToast({ message: error.response.data.message })
+        }
+    }
+
 
     const handleOtpChange = (value: string) => {
         formik.setFieldValue("otp", parseInt(value));
@@ -102,12 +116,14 @@ const VerifyEmail: React.FC = () => {
                     message={formik.errors.otp}
                 />
 
-                <div className='flex justify-between'>
-                    <div className='items-baseline flex justify-start'>
-                        <p className='text-sm font-thin pr-2 text-light_primary_text dark:text-dark_primary_text'>Resend OTP in</p>
-                        <span className='text-xl text-light_primary dark:text-dark_primary'>{`00:${resendTimer.toString().padStart(2, '0')}`}</span>
-                    </div>
-                    <span className='text-light_primary dark:text-dark_primary text-sm'>Resend OTP</span>
+                <div className='flex justify-end'>
+                    {
+                        resendTimer <= 0 ? <span className='text-light_primary dark:text-dark_primary text-sm cursor-pointer' onClick={resendOtp}>Resend OTP</span> :
+                            <div className='items-baseline flex justify-start'>
+                                <p className='text-sm font-thin pr-2 text-light_primary_text dark:text-dark_primary_text'>Resend OTP in</p>
+                                <span className='text-xl text-light_primary dark:text-dark_primary'>{`00:${resendTimer.toString().padStart(2, '0')}`}</span>
+                            </div>
+                    }
                 </div>
 
                 <div className='my-10'>
