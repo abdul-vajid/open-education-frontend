@@ -11,6 +11,7 @@ type InitialState = {
     }
     creatingQuizErrorMsg: string;
     fetchingQuizErrorMsg: string;
+    addQuestionErrorMsg: string;
     isLoading: boolean
     isQuizAvailable: boolean
 };
@@ -30,6 +31,7 @@ const initialState: InitialState = {
     },
     isQuizAvailable: false,
     creatingQuizErrorMsg: "",
+    addQuestionErrorMsg: "",
     fetchingQuizErrorMsg: "",
     isLoading: false
 };
@@ -62,6 +64,19 @@ export const createQuiz = createAsyncThunk(
     }
 );
 
+export const addQuestion = createAsyncThunk(
+    'quiz/addQuestion',
+    async ({ axiosInstance, body }: TPostCallExtra) => {
+        const axios = axiosInstance;
+        try {
+            const response = await axios.put('/valuation/add-question', body);
+            return response.data.data;
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message || 'Something went wrong');
+        }
+    }
+);
+
 
 const setupValuationSlice = createSlice({
     name: 'tutor-courses',
@@ -74,7 +89,7 @@ const setupValuationSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchQuiz.pending, (state) => {
             state.isLoading = true
-            console.log("fetchQuiz.pending")
+            state.fetchingQuizErrorMsg= ""
         })
             .addCase(fetchQuiz.fulfilled, (state, action: PayloadAction<InitialState['quiz']>) => {
                 state.isLoading = false
@@ -85,18 +100,31 @@ const setupValuationSlice = createSlice({
                 state.isLoading = false;
                 state.isQuizAvailable = false;
                 state.quiz = initialState.quiz
-                state.fetchingQuizErrorMsg = action.error.message || 'Something went wrong';
+                state.fetchingQuizErrorMsg = action.error.message ? action.error.message :  'Something went wrong, Try again!';
             });
         builder.addCase(createQuiz.pending, (state) => {
             state.isLoading = true
+            state.creatingQuizErrorMsg = ""
         })
             .addCase(createQuiz.fulfilled, (state, action: PayloadAction<InitialState['quiz']>) => {
                 state.isLoading = false
                 state.quiz = action.payload
             })
             .addCase(createQuiz.rejected, (state, action) => {
+                state.creatingQuizErrorMsg = action.error.message ? action.error.message :  'Something went wrong, Try again!';
                 state.isLoading = false;
-                state.creatingQuizErrorMsg = action.error.message || 'Something went wrong';
+            });
+        builder.addCase(addQuestion.pending, (state) => {
+            state.isLoading = true
+            state.addQuestionErrorMsg = ""
+        })
+            .addCase(addQuestion.fulfilled, (state, action: PayloadAction<InitialState['quiz']>) => {
+                state.isLoading = false
+                state.quiz = action.payload
+            })
+            .addCase(addQuestion.rejected, (state, action) => {
+                state.addQuestionErrorMsg = action.error.message ? action.error.message :  'Something went wrong, Try again!';
+                state.isLoading = false;
             });
     },
 });

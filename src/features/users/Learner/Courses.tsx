@@ -5,10 +5,11 @@ import ListCourses from '../../../containers/Sections/learner/ListCourses'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
 import { fetchPublicCourses } from '../../Public/publicSlice'
 import EnrolledCourses from '../../../containers/Sections/EnrolledCourses'
+import PublicCourseListing from '../../../containers/Sections/PublicCourseListing'
 
 const Courses: React.FC = () => {
     const [sideMenu, setSideMenu] = useState(false)
-    const { publicCourses, isCoursesFetched,  isFetchingCourses} = useAppSelector(state => state.public)
+    // const { publicCourses, isCoursesFetched,  isFetchingCourses} = useAppSelector(state => state.public)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -23,7 +24,8 @@ const Courses: React.FC = () => {
                 <div className='lg:w-[40%] h-full'>
                     <EnrolledCourses />
                 </div>
-                <ListCourses courses={publicCourses} isCourses={!isCoursesFetched ? false : true} isFetchingCourses={!isFetchingCourses ? false : true} classNames='lg:w-[70%]'/>
+                {/* <ListCourses courses={publicCourses} isCourses={!isCoursesFetched ? false : true} isFetchingCourses={!isFetchingCourses ? false : true} classNames='lg:w-[70%]'/> */}
+                <PublicCourseListing />
             </div>
 
         </div>

@@ -55,14 +55,12 @@ const HostingSection: React.FC<HostingSectionProps> = ({ classNames }) => {
                     paymentMode: values.paymentMode
                 }
             })).then((action) => {
-                const response = action.payload;
-                if (response.status === "fulfilled") {
-                    useSuccessToast({ message: response.message || 'Your course successfully hosted' })
-                    navigate(TutorRoutes.courseDetails)
-                }
-            }).catch(() => {
+                useSuccessToast({ message: action.payload?.message ? action.payload?.message : 'Your course successfully hosted' })
+                navigate(TutorRoutes.courses)
+            }).catch((error) => {
+                console.log("error from catch>>", error)
                 useErrorToast({
-                    message: courseHostingErrorMsg ? courseHostingErrorMsg : "Something went wrong",
+                    message: courseHostingErrorMsg ? courseHostingErrorMsg : "Something went wrong, try again",
                 });
             })
         },
@@ -186,11 +184,19 @@ const HostingSection: React.FC<HostingSectionProps> = ({ classNames }) => {
                 onBlur={formik.handleBlur}
                 message={formik.errors.description}
             />
-            <div className='flex justify-end gap-5 mt-10 mb-5'>
-                <Link to={TutorRoutes.courseDetails} replace={true}>
-                    <OutlineBtn btnText='Discard' />
-                </Link>
-                <PrimaryBtn onClick={formik.submitForm} btnText='Host Your Course' loadingText='Hosting..' isLoading={isCourseHosting ? true : false} />
+
+            <div className='flex justify-between gap-5 mt-10 mb-5'>
+                <div>
+                    <Link to={TutorRoutes.setupValuation} replace={true}>
+                        <OutlineBtn btnText='Setup Valuation' />
+                    </Link>
+                </div>
+                <div className="flex flex-row gap-5">
+                    <Link to={TutorRoutes.courseDetails} replace={true}>
+                        <OutlineBtn btnText='Discard' />
+                    </Link>
+                    <PrimaryBtn onClick={formik.submitForm} btnText='Host Your Course' loadingText='Hosting..' isLoading={isCourseHosting ? true : false} />
+                </div>
             </div>
         </div>
     )

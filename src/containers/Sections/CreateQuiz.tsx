@@ -5,12 +5,13 @@ import { useFormik } from 'formik'
 import PrimaryBtn from '../../components/Button/PrimaryBtn'
 import OutlineBtn from '../../components/Button/OutlineBtn'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
-import { ValuationModes } from '../../app/types/enums'
+import { TutorRoutes, ValuationModes } from '../../app/types/enums'
 import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
-import { createQuiz, fetchQuiz } from '../../features/users/Tutor/setUpValuationSlice'
+import { addQuestion, createQuiz, fetchQuiz } from '../../features/users/Tutor/setUpValuationSlice'
 import { questionSchema } from '../../utils/validations/questionSchema'
 import { IQuestion } from '../../app/types/interfaces'
 import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
+import { Link } from 'react-router-dom'
 
 type CreateQuizProps = {
     classNames?: string
@@ -19,8 +20,9 @@ type CreateQuizProps = {
 const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
     const { course } = useAppSelector(state => state.currentCourse)
     const { curentLesson } = useAppSelector(state => state.currentLesson)
-    const { isQuizAvailable, quiz, creatingQuizErrorMsg, isLoading } = useAppSelector(state => state.setUpValuation)
+    const { isQuizAvailable, quiz, creatingQuizErrorMsg, isLoading, addQuestionErrorMsg } = useAppSelector(state => state.setUpValuation)
     const [questionsArray, setQuestionsArray] = useState<IQuestion[]>([])
+    const [fetchQuizAgain, setFetchQuizAgain] = useState<boolean>(false)
     const dispatch = useAppDispatch()
     const axios = useAxiosPrivate()
 
@@ -36,9 +38,32 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
         validationSchema: questionSchema,
 
         onSubmit: (values) => {
-            questionsArray.push(values)
-            setQuestionsArray(questionsArray)
-            formik.resetForm()
+            if (!isQuizAvailable) {
+                questionsArray.push(values)
+                setQuestionsArray(questionsArray)
+                formik.resetForm()
+            } else {
+                dispatch(addQuestion({
+                    axiosInstance: axios,
+                    body: {
+                        courseId: course._id,
+                        quizId: quiz._id,
+                        question: values.question,
+                        correctAnswer: values.correctAnswer,
+                        optionA: values.optionA,
+                        optionB: values.optionB,
+                        optionC: values.optionC
+                    }
+                })).then((action) => {
+                    setFetchQuizAgain(true)
+                    useSuccessToast({ message: action.payload.message || 'Greate! Question added' })
+                    formik.resetForm()
+                }).catch(() => {
+                    useErrorToast({
+                        message: addQuestionErrorMsg ? addQuestionErrorMsg : "Something went wrong, Try again!",
+                    });
+                })
+            }
         },
     });
 
@@ -56,13 +81,14 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
                 questions: questionsArray
             }
         })).then((action) => {
+            setFetchQuizAgain(true)
             const response = action.payload;
             if (response.status === "fulfilled") {
                 useSuccessToast({ message: response.message || 'Greate! Quiz created' })
             }
         }).catch(() => {
             useErrorToast({
-                message: creatingQuizErrorMsg ? creatingQuizErrorMsg : "Something went wrong",
+                message: creatingQuizErrorMsg ? creatingQuizErrorMsg : "Something went wrong, Try again!",
             });
         })
     }
@@ -81,10 +107,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
                 lessonId: curentLesson.lessonId
             }))
         }
-    }, [])
-
-    console.log("quiz.questions >>>",quiz.questions)
-    console.log("quiz >>>",quiz)
+    }, [fetchQuizAgain])
 
     return (
         <div className={`${classNames}bg-light_primary_bg dark:bg-dark_primary_bg h-auto rounded-lg p-8`}>
@@ -173,10 +196,17 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
                     </div>
                 </div>
             </div>
-            <div className='flex justify-end gap-5 mt-10 mb-10'>
-                <OutlineBtn onClick={formik.submitForm} btnText='Add Question' />
-                <PrimaryBtn onClick={handleCreateQuiz} btnText={isQuizAvailable ? "Save Changes" : "Create Quiz"} loadingText='Updating' />
-            </div>
+            {
+                isQuizAvailable ? <div className='flex justify-end gap-5 mt-10 mb-10'>
+                    <Link to={TutorRoutes.hostCourse}>
+                        <OutlineBtn btnText='Host your Course' />
+                    </Link>
+                    <PrimaryBtn onClick={formik.submitForm} btnText="Add Question" isLoading={!isLoading ? false : true} loadingText='Updating' />
+                </div> : <div className='flex justify-end gap-5 mt-10 mb-10'>
+                    <OutlineBtn onClick={formik.submitForm} btnText='Add Question' />
+                    <PrimaryBtn onClick={handleCreateQuiz} btnText={isQuizAvailable ? "Save Changes" : "Create Quiz"} isLoading={!isLoading ? false : true} loadingText='Updating' />
+                </div>
+            }
 
             {
                 (questionsArray.length > 0 || (quiz.questions.length > 0 && quiz.questions[0].question != "")) && <div className="w-full mb-5 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-700" >
@@ -195,7 +225,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
                             ))
                         }
                         {
-                             quiz.questions.map((question) => (
+                            isQuizAvailable && quiz.questions.map((question) => (
                                 <div className="flex flex-col gap-4 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
 
                                     <div className="w-full pl-3">

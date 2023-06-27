@@ -9,6 +9,8 @@ import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
 import { useFormik } from 'formik'
 import { useAppDispatch } from '../../app/hooks/storeHooks'
 import { fetchCourses } from '../../features/users/Tutor/tutorCoursesSlice'
+import { fieldOfStudyList } from '../../app/constants/BasicConstants';
+import SelectInput from '../../components/InputFiled/SelectInput';
 
 type CreateCourseProps = {
     classNames?: string
@@ -87,20 +89,17 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
                 isMessage={formik.touched.courseTitle}
                 message={formik.errors.courseTitle}
             />
-            <InputField
-                inputType='text'
-                labelText='Field of study'
-                name='fieldOfStudy'
-                placeHolder='eg: Digital marketing'
-                messageType='error'
+            <SelectInput
+                labelText="Field Of Study"
+                name="fieldOfStudy"
+                messageType="error"
+                optionList={fieldOfStudyList}
+                isMessage={formik.touched.fieldOfStudy}
+                value={formik.values.fieldOfStudy}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 message={formik.errors.fieldOfStudy}
-                value={formik.values.fieldOfStudy}
-                isMessage={formik.touched.fieldOfStudy}
             />
-
-
             <TextArea
                 labelText='Prerequisites'
                 name='prerequisites'
@@ -117,7 +116,7 @@ const CreateCourse: React.FC<CreateCourseProps> = ({ classNames, close }) => {
                 name='description'
                 placeHolder='Provide a good description for your course'
                 messageType="error"
-                isMessage={true}
+                isMessage={formik.touched.description}
                 value={formik.values.description}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}

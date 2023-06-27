@@ -39,7 +39,7 @@ const SelectInput: React.FC<SelectInputProps> = (props) => {
                     ))
                 }
             </select>
-            {isMessage && <p className="mt-2 text-sm font-light text-red-500">{message}</p>}
+            {isMessage === true && <p className="mt-2 text-sm font-light text-red-500">{message}</p>}
         </div>
     );
 };
