@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { useAppSelector } from '../../app/hooks/storeHooks'
-import { CourseStatus, TutorRoutes } from '../../app/types/enums'
-import PrimaryBtn from '../../components/Button/PrimaryBtn'
+import { useAppSelector } from '../../../app/hooks/storeHooks'
+import { CourseStatus, TutorRoutes } from '../../../app/types/enums'
+import PrimaryBtn from '../../../components/Button/PrimaryBtn'
 import { Link, useNavigate } from 'react-router-dom'
 
 type CourseDetailsBoxProps = {

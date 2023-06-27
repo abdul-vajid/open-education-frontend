@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { SlOptions } from "react-icons/sl";
 import { IoMdClose } from "react-icons/io";
-import SingleUnpublishedCourse from '../../components/Card/SingleUnpublished'
+import SingleUnpublishedCourse from '../../../components/Card/SingleUnpublished'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
-import LoaderCard from '../../components/Card/LoaderCard'
-import { TCourse } from '../../app/types/types'
-import { clearCurrentCourse, setCurrentCourse } from '../../features/users/Tutor/currentCourseSlice'
-import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
-import { fetchCourse } from '../../features/users/Tutor/tutorCoursesSlice'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
+import LoaderCard from '../../../components/Card/LoaderCard'
+import { TCourse } from '../../../app/types/types'
+import { clearCurrentCourse, setCurrentCourse } from '../../../features/users/Tutor/currentCourseSlice'
+import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate'
+import { fetchCourse } from '../../../features/users/Tutor/tutorCoursesSlice'
 
 type NonPublishedCoursesProps = {
     classNames?: string

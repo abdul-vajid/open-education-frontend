@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import SingleCourse from '../../components/Card/SingleCourse'
-import SearchField from '../../components/InputFiled/SearchField'
-import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
-import { fetchPublicCourses } from '../../features/Public/publicSlice'
-import LoaderCard from '../../components/Card/LoaderCard'
-import ListEmpty from '../../components/ErrorCards/ListEmpty'
+import SingleCourse from '../../../components/Card/SingleCourse'
+import SearchField from '../../../components/InputFiled/SearchField'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
+import { fetchPublicCourses } from '../../../features/Public/publicSlice'
+import LoaderCard from '../../../components/Card/LoaderCard'
+import ListEmpty from '../../../components/ErrorCards/ListEmpty'
 
 const PublicCourseListing: React.FC = () => {
     const dispatch = useAppDispatch();

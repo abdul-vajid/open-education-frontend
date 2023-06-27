@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import SingleLesson from '../../components/Card/SingleLesson'
-import emptyBox from "../../utils/assets/empty-box.png"
+import SingleLesson from '../../../components/Card/SingleLesson'
+import emptyBox from "../../../utils/assets/empty-box.png"
 import { useNavigate } from 'react-router-dom'
-import {  useAppSelector } from '../../app/hooks/storeHooks'
+import {  useAppSelector } from '../../../app/hooks/storeHooks'
 import { SlOptions } from 'react-icons/sl'
 import { IoMdClose } from 'react-icons/io'
-import { TutorRoutes } from '../../app/types/enums'
+import { TutorRoutes } from '../../../app/types/enums'
 
 type ListLessonsProps = {
     classNames?: string

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import UserNavBar from "../../../containers/Navbars/UserNavBar"
 import UserSidebar from "../../../containers/Navbars/UserSidebar"
-import ProfileDetails from "../../../containers/Sections/ProfileDetails"
+import ProfileDetails from "../../../containers/Sections/common/ProfileDetails"
 
 
 const UserProfile: React.FC = () => {

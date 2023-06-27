@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
-import FileUpload from '../../components/InputFiled/FileUpload'
-import InputField from '../../components/InputFiled/InputField'
-import TextArea from '../../components/InputFiled/TextArea'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
+import FileUpload from '../../../components/InputFiled/FileUpload'
+import InputField from '../../../components/InputFiled/InputField'
+import TextArea from '../../../components/InputFiled/TextArea'
 import { BiEdit } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { useFormik } from 'formik'
-import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
-import { updateUserProfileSchema } from '../../utils/validations/updateUserProfileSchema'
-import { getUserProfile, updateProfile } from '../../features/users/Common/userSlice'
-import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
-import PrimaryBtn from '../../components/Button/PrimaryBtn'
+import { useErrorToast, useSuccessToast } from '../../../app/hooks/toastHooks'
+import { updateUserProfileSchema } from '../../../utils/validations/updateUserProfileSchema'
+import { getUserProfile, updateProfile } from '../../../features/users/Common/userSlice'
+import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate'
+import PrimaryBtn from '../../../components/Button/PrimaryBtn'
 
 type ProfileDetailsProps = {
     classNames?: string

@@ -1,8 +1,8 @@
 import React from 'react'
-import SingleCourse from '../../components/Card/SingleCourse'
-import ListEmpty from '../../components/ErrorCards/ListEmpty'
-import LoaderCard from '../../components/Card/LoaderCard'
-import { useAppSelector } from '../../app/hooks/storeHooks'
+import SingleCourse from '../../../components/Card/SingleCourse'
+import ListEmpty from '../../../components/ErrorCards/ListEmpty'
+import LoaderCard from '../../../components/Card/LoaderCard'
+import { useAppSelector } from '../../../app/hooks/storeHooks'
 type ListCoursesProps = {
     classNames?: string
     title?: string

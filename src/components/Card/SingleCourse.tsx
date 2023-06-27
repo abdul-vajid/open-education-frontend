@@ -11,7 +11,7 @@ type SingleCourseProps = {
 const SingleCourse: React.FC<SingleCourseProps> = ({ course, onClick}) => {
     return (
         <li>
-            <div className='w-full p-4 mt-5 h-auto rounded-md bg-light_secondary_bg dark:bg-dark_secondary_bg' onClick={onClick} style={{ overflow: 'visible' }} >
+            <div className='w-full p-4 mt-5 h-auto rounded-md bg-light_secondary_bg dark:bg-dark_secondary_bg cursor-pointer' onClick={onClick} style={{ overflow: 'visible' }} >
                 <div className='flex gap-5'>
                     <div className='w-64 rounded-md'>
                         <img src={course.imageUrl != "" ? course.imageUrl : notFoundImage} alt="Not available" />

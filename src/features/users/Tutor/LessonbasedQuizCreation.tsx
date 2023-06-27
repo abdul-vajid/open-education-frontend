@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import UserNavBar from "../../../containers/Navbars/UserNavBar"
 import UserSidebar from "../../../containers/Navbars/UserSidebar"
-import CreateQuiz from "../../../containers/Sections/CreateQuiz"
+import CreateQuiz from "../../../containers/Sections/tutor/CreateQuiz"
 import { useAppSelector } from "../../../app/hooks/storeHooks"
 import { TutorRoutes } from "../../../app/types/enums"
 import { useNavigate } from "react-router-dom"

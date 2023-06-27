@@ -3,8 +3,8 @@ import PublicNavbar from '../../containers/Navbars/PublicNavbar';
 import PublicBanner from '../../containers/Banners/PublicBanner';
 import Testimonials from '../../components/Card/Testimonials';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Timeline from '../../containers/Sections/Timeline';
-import PublicCourseListing from '../../containers/Sections/PublicCourseListing';
+import Timeline from '../../containers/Sections/common/Timeline';
+import PublicCourseListing from '../../containers/Sections/common/PublicCourseListing';
 
 
 const Home: React.FC = () => {

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import UserSidebar from '../../../containers/Navbars/UserSidebar'
 import UserNavBar from '../../../containers/Navbars/UserNavBar'
-import ListCourses from '../../../containers/Sections/learner/ListCourses'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
+import { useAppDispatch } from '../../../app/hooks/storeHooks'
 import { fetchPublicCourses } from '../../Public/publicSlice'
-import EnrolledCourses from '../../../containers/Sections/EnrolledCourses'
-import PublicCourseListing from '../../../containers/Sections/PublicCourseListing'
+import EnrolledCourses from '../../../containers/Sections/learner/EnrolledCourses'
+import PublicCourseListing from '../../../containers/Sections/common/PublicCourseListing'
 
 const Courses: React.FC = () => {
     const [sideMenu, setSideMenu] = useState(false)
-    // const { publicCourses, isCoursesFetched,  isFetchingCourses} = useAppSelector(state => state.public)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -24,7 +22,6 @@ const Courses: React.FC = () => {
                 <div className='lg:w-[40%] h-full'>
                     <EnrolledCourses />
                 </div>
-                {/* <ListCourses courses={publicCourses} isCourses={!isCoursesFetched ? false : true} isFetchingCourses={!isFetchingCourses ? false : true} classNames='lg:w-[70%]'/> */}
                 <PublicCourseListing />
             </div>
 

@@ -3,7 +3,7 @@ import UserNavBar from "../../../containers/Navbars/UserNavBar"
 import UserSidebar from "../../../containers/Navbars/UserSidebar"
 import { useAppSelector } from "../../../app/hooks/storeHooks"
 import { useNavigate } from "react-router-dom"
-import HostingSection from "../../../containers/Sections/HostingSection"
+import HostingSection from "../../../containers/Sections/tutor/HostingSection"
 
 
 const HostCourse: React.FC = () => {

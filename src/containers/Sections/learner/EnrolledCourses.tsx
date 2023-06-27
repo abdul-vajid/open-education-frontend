@@ -1,5 +1,5 @@
 import React from 'react'
-import ListEmpty from '../../components/ErrorCards/ListEmpty'
+import ListEmpty from '../../../components/ErrorCards/ListEmpty'
 
 type EnrolledCoursesProps = {
     classNames?: string

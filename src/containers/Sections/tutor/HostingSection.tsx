@@ -1,19 +1,19 @@
 import React from 'react'
-import { useAppDispatch, useAppSelector } from '../../app/hooks/storeHooks'
-import FileUpload from '../../components/InputFiled/FileUpload'
-import InputField from '../../components/InputFiled/InputField'
-import TextArea from '../../components/InputFiled/TextArea'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
+import FileUpload from '../../../components/InputFiled/FileUpload'
+import InputField from '../../../components/InputFiled/InputField'
+import TextArea from '../../../components/InputFiled/TextArea'
 import { useFormik } from 'formik'
-import { useErrorToast, useSuccessToast } from '../../app/hooks/toastHooks'
-import useAxiosPrivate from '../../app/hooks/useAxiosPrivate'
-import PrimaryBtn from '../../components/Button/PrimaryBtn'
-import SelectInput from '../../components/InputFiled/SelectInput'
-import { fieldOfStudyList } from '../../app/constants/BasicConstants';
-import OutlineBtn from '../../components/Button/OutlineBtn'
-import { hostCourseSchema } from '../../utils/validations/hostCourseSchema'
-import { hostCourse } from '../../features/users/Tutor/currentCourseSlice'
+import { useErrorToast, useSuccessToast } from '../../../app/hooks/toastHooks'
+import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate'
+import PrimaryBtn from '../../../components/Button/PrimaryBtn'
+import SelectInput from '../../../components/InputFiled/SelectInput'
+import { fieldOfStudyList } from '../../../app/constants/BasicConstants';
+import OutlineBtn from '../../../components/Button/OutlineBtn'
+import { hostCourseSchema } from '../../../utils/validations/hostCourseSchema'
+import { hostCourse } from '../../../features/users/Tutor/currentCourseSlice'
 import { Link, useNavigate } from 'react-router-dom'
-import { TutorRoutes } from '../../app/types/enums'
+import { TutorRoutes } from '../../../app/types/enums'
 
 type HostingSectionProps = {
     classNames?: string
