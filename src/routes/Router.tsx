@@ -17,6 +17,7 @@ import NotFound from "./NotFound";
 import CheckLoginStatus from "./Authorization/CheckLoginStatus";
 import LessonbasedQuizCreation from "../features/users/Tutor/LessonbasedQuizCreation";
 import HostCourse from "../features/users/Tutor/HostCourse";
+import Inbox from "../features/users/Common/Inbox";
 
 const Router: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const Router: React.FC = () => {
         <Route path="/learner/profile" element={<UserProfile />} />
         <Route path="/learner/courses" element={<LearnerCoursesPage />} />
         <Route path="/learner/course/details" element={<LeanerCourseDetails />} />
+        <Route path="/learner/inbox" element={<Inbox />} />
       </Route>
       <Route path="/tutor" element={<TutorAuthorization />}>
         <Route path="/tutor" element={<TutorOverView />} />
@@ -36,6 +38,7 @@ const Router: React.FC = () => {
         <Route path="/tutor/course/setup-valuation" element={<SetupValuation />} />
         <Route path="/tutor/course/create-quiz" element={<LessonbasedQuizCreation />} />
         <Route path="/tutor/course/host" element={<HostCourse />} />
+        <Route path="/tutor/inbox" element={<Inbox />} />
       </Route>
       {/* <Route path="/admin" element={<AdminAuthorization />}/> */}
       {/* <Route path="/learner" element={<LearnerAuthorization />}/> */}
