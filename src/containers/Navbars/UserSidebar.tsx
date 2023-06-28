@@ -20,7 +20,7 @@ const UserSidebar: React.FC<UserSidebarProps> = ({ sideMenu }) => {
                 </ul>
                 <span className='font-medium text-lg text-light_primary dark:text-dark_primary_text'>Account</span>
                 <ul className="space-y-2 font-medium">
-                    <SideBarBtn BtnText='Inbox' isSelected={false} linkPath='/' isBadge={true} />
+                    <SideBarBtn BtnText='Inbox' isSelected={false} linkPath={`/${role}/inbox`} isBadge={true} />
                     <SideBarBtn BtnText='Notifications' isSelected={false} linkPath='/' />
                     <SideBarBtn BtnText='Profile' isSelected={false} linkPath={`/${role}/profile`} />
                     <SideBarBtn BtnText='Contact Us' isSelected={false} linkPath='/' />

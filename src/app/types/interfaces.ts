@@ -16,6 +16,17 @@ export interface ICourseDetails {
     lessons: string | ILessonWithoutContent[];
 }
 
+export interface IAuthorDetails {
+    userId: string;
+    fullname: string;
+    phoneNumber: number;
+    about: string;
+    city: string;
+    country: string;
+    profilePicture: string;
+    profileTitle: string;
+}
+
 export interface IReview {
     userId: string;
     fullname: string;

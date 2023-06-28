@@ -1,38 +1,47 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from "../../app/config/apiConfig"
-import { TPublishedCourse } from '../../app/types/types'
+import { IAuthorDetails, ICourseDetails, IReview } from '../../app/types/interfaces'
 
 type InitialState = {
-    publicCourse: TPublishedCourse
+    course: {
+        courseDetails: ICourseDetails
+        authorDetails: IAuthorDetails
+        reviews: IReview | string
+    }
     isCourseFetched: boolean,
     isFetchingCourse: boolean
     fetchingCourseErrMsg: string
 }
 const initialState: InitialState = {
-    publicCourse: {
+    course: {
         authorDetails: {
             about: "",
-            autherId: "",
+            userId: "",
             city: "",
             country: "",
             fullname: "",
             profilePicture: "",
-            profileTitle: ""
+            profileTitle: "",
+            phoneNumber: 0
         },
-        courseFee: 0,
-        courseId: "",
-        courseTitle: "",
-        description: "",
-        difficulty: "",
-        discountCoupons: "",
-        enrolledCount: 0,
-        fieldOfStudy: "",
-        imageUrl: "",
-        paymentMode: "",
-        prerequisites: [],
-        reviews: "",
-        totalLessons: 0,
-        valuationMode: "",
+        courseDetails: {
+            courseId: "",
+            courseTitle: "",
+            fieldOfStudy: "",
+            imageUrl: "",
+            courseFee: 0,
+            paymentMode: "",
+            valuationMode: "",
+            difficulty: "",
+            enrolledCount: 0,
+            description: "",
+            totalLessons: 0,
+            status: "",
+            prerequisites: "",
+            discountCoupons: "",
+            lessons: []
+        },
+        reviews: "This course does not have any review",
     },
     isCourseFetched: false,
     isFetchingCourse: false,
@@ -43,8 +52,8 @@ export const fetchPublicCourse = createAsyncThunk(
     'course/fetchPublicCourse',
     async (courseId: string) => {
         try {
-            const response = await axios.get(`/get-courses${courseId}`);
-            return response.data;
+            const response = await axios.get(`/get-course/${courseId}`);
+            return response.data.data;
         } catch (error: any) {
             throw new Error(error.response?.data?.message || 'Something went wrong');
         }
@@ -59,10 +68,13 @@ const publicCurrentSlice = createSlice({
         builder.addCase(fetchPublicCourse.pending, (state) => {
             state.isFetchingCourse = true
         })
-            .addCase(fetchPublicCourse.fulfilled, (state, action: PayloadAction<InitialState["publicCourse"]>) => {
+            .addCase(fetchPublicCourse.fulfilled, (state, action: PayloadAction<InitialState["course"]>) => {
                 state.isFetchingCourse = false
                 state.isCourseFetched = true
-                state.publicCourse = action.payload
+                console.log("fetchPublicCourse ",action.payload)
+                state.course.authorDetails = action.payload.authorDetails
+                state.course.courseDetails = action.payload.courseDetails
+                state.course.reviews = action.payload.reviews
             })
             .addCase(fetchPublicCourse.rejected, (state, action) => {
                 state.isFetchingCourse = false;

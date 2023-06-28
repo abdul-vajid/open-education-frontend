@@ -5,10 +5,24 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
 import { fetchPublicCourses } from '../../../features/Public/publicSlice'
 import LoaderCard from '../../../components/Card/LoaderCard'
 import ListEmpty from '../../../components/ErrorCards/ListEmpty'
+import { LearnerRoutes } from '../../../app/types/enums'
+import { fetchPublicCourse } from '../../../features/Public/publicCurrentSlice'
+import { useErrorToast } from '../../../app/hooks/toastHooks'
+import { useNavigate } from 'react-router-dom'
 
 const PublicCourseListing: React.FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate()
     const { publicCourses, isFetchingCourses, fetchingCoursesErrMsg, isCoursesFetched } = useAppSelector(state => state.public)
+
+    const handleCourseClick = (courseId: string) => {
+        dispatch(fetchPublicCourse(courseId)).then((action)=> {
+            console.log("action from dispatch",action)
+            navigate(LearnerRoutes.courseDetails)
+        }).catch(()=> {
+            useErrorToast({message: "Can not fetch course!"})
+        })
+    }
 
     useEffect(() => {
         dispatch(fetchPublicCourses())
@@ -28,12 +42,6 @@ const PublicCourseListing: React.FC = () => {
                 <div>
                     <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
                         {
-                            isFetchingCourses &&
-                            <li className='py-3 sm:py-4"'>
-                                <LoaderCard />
-                            </li>
-                        }
-                        {
                             fetchingCoursesErrMsg &&
                             <li className='py-3 sm:py-4"'>
                                 <span className='text-red-500 text-lg text content-center'></span>
@@ -42,7 +50,7 @@ const PublicCourseListing: React.FC = () => {
                         {(isCoursesFetched === true && Array.isArray(publicCourses)) ? publicCourses.map((course) => (
                             <div>
                                 {
-                                    course.courseTitle !== "" && <SingleCourse course={course} />
+                                    course.courseTitle !== "" && <SingleCourse onClick={() => handleCourseClick(course.courseId)} course={course} />
                                 }
                             </div>
 
