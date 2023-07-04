@@ -8,6 +8,9 @@ import currentCourseReducer from '../../features/users/Tutor/currentCourseSlice'
 import currentLessonReducer from '../../features/users/Tutor/currentLessonSlice';
 import setUpValuationReducer from '../../features/users/Tutor/setUpValuationSlice';
 import publicCurrentReducer from '../../features/Public/publicCurrentSlice';
+import inboxReducer from '../../features/users/Common/inboxSlice';
+import currentChatReducer from '../../features/users/Common/currentChatSlice';
+
 
 
 const rootReducer = combineReducers({
@@ -19,7 +22,9 @@ const rootReducer = combineReducers({
     currentCourse: currentCourseReducer,
     currentLesson: currentLessonReducer,
     setUpValuation: setUpValuationReducer,
-    publicCurrent: publicCurrentReducer
+    publicCurrent: publicCurrentReducer,
+    inbox: inboxReducer,
+    currentChat: currentChatReducer,
 });
 
 export default rootReducer;

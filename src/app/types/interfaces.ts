@@ -60,3 +60,37 @@ export interface IQuestion {
     optionB: string;
     optionC: string;
 }
+
+export interface IChatList {
+    userId: string;
+    fullname: string;
+    chatId: string;
+    profilePicture?: string
+    latestMessage?: IMessage;
+}
+
+export interface ISingleChat {
+    partnerDetails: IPartnerDetails
+    accessedChat: IAccessedChat
+    messages: IMessage[]
+}
+
+export interface IPartnerDetails {
+    userId: string
+    fullname: string
+    profilePicture?: string
+}
+
+export interface IAccessedChat {
+    isGroupChat: boolean
+    users: string[]
+    _id: string
+}
+
+export interface IMessage {
+    _id: string
+    sender: string
+    content: string
+    chat: string
+    readBy: string[]
+}

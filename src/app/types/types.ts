@@ -8,19 +8,13 @@ export type ApiOperations = {
     postCallErrorMsg?: string
 }
 
-export type TFetchCourseExtra = {
-    courseId: string
-    axiosInstance: AxiosInstance
-}
-
-export type TFetchQuizExtra = {
-    courseId: string
-    lessonId: string | undefined
-    axiosInstance: AxiosInstance
-}
-
 export type TPostCallExtra = {
     body: any
+    axiosInstance: AxiosInstance
+}
+
+export type TGetCallWithParamsIdExtra = {
+    paramsId: string
     axiosInstance: AxiosInstance
 }
 
@@ -81,4 +75,14 @@ export type LessonInCourse = {
     lessonStatus: string
 }
 
+export type TFetchCourseExtra = {
+    courseId: string
+    axiosInstance: AxiosInstance
+}
+
+export type TFetchQuizExtra = {
+    courseId: string
+    lessonId: string | undefined
+    axiosInstance: AxiosInstance
+}
 
