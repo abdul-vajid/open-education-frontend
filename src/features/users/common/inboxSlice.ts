@@ -55,7 +55,6 @@ export const getSingleChat = createAsyncThunk('inbox/getSingleChat', async ({ pa
     const axios = axiosInstance;
     try {
         const response = await axios.get(`communicate/chat/${paramsId}`)
-        console.log("response.data.data in thunk getSingleChat >> ", response.data.data)
         return response.data.data;
     } catch (error: any) {
         throw new Error(error.response?.data?.message || 'Something went wrong');
@@ -87,7 +86,7 @@ const inboxSlice = createSlice({
     initialState,
     reducers: {
         addNewMessageToList: ((state, action: PayloadAction<IMessage>) => {
-            if(state.singleChat.messages[state.singleChat.messages.length -1]._id != action.payload._id){
+            if(state.singleChat.messages.length> 0 && (state.singleChat.messages[state.singleChat.messages.length -1]._id != action.payload._id)){
                 state.singleChat.messages.push(action.payload);
             }
         }),

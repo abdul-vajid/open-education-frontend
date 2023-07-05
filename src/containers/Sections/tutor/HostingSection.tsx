@@ -58,7 +58,6 @@ const HostingSection: React.FC<HostingSectionProps> = ({ classNames }) => {
                 useSuccessToast({ message: action.payload?.message ? action.payload?.message : 'Your course successfully hosted' })
                 navigate(TutorRoutes.courses)
             }).catch((error) => {
-                console.log("error from catch>>", error)
                 useErrorToast({
                     message: courseHostingErrorMsg ? courseHostingErrorMsg : "Something went wrong, try again",
                 });

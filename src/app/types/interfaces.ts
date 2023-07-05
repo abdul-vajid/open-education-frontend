@@ -67,6 +67,8 @@ export interface IChatList {
     chatId: string;
     profilePicture?: string
     latestMessage?: IMessage;
+    updatedAt: any
+    users: IUsersArrayWithUnReadMessageCount[]
 }
 
 export interface ISingleChat {
@@ -83,7 +85,7 @@ export interface IPartnerDetails {
 
 export interface IAccessedChat {
     isGroupChat: boolean
-    users: string[]
+    users: IUsersArrayWithUnReadMessageCount[]
     _id: string
 }
 
@@ -93,4 +95,9 @@ export interface IMessage {
     content: string
     chat: string
     readBy: string[]
+    updatedAt?: any
+}
+export interface IUsersArrayWithUnReadMessageCount {
+    userId: string,
+    unReadMessageCount: number
 }

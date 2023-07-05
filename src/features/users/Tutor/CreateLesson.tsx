@@ -241,7 +241,7 @@ const CreateLesson: React.FC = () => {
                                     <TextComponent contentType={item.contentType} placeholder='Click here to edit List title' onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
 
                                     {Array.isArray(item.content) && item.content.map((_element: any, elementIndex: number) => (
-                                        elementIndex !== 0 && <TextComponent contentType={item.contentType} placeholder={`Edit item ${elementIndex} in the list`} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
+                                        elementIndex !== 0 && <TextComponent key={elementIndex} contentType={item.contentType} placeholder={`Edit item ${elementIndex} in the list`} onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />
                                     ))}
 
                                     <TextComponent contentType={item.contentType} placeholder='Add new item to the list' onChange={(e) => handleComponentChange(item.contentType, item.index, e.target.value)} />

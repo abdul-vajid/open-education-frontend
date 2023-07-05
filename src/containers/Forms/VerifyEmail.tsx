@@ -81,7 +81,6 @@ const VerifyEmail: React.FC = () => {
                 useSuccessToast({ message: "OTP has been sent to your mail" })
             })
         } catch (error: any) {
-            console.log(error)
             useErrorToast({ message: error.response.data.message })
         }
     }

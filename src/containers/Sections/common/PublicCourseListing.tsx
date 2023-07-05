@@ -17,7 +17,6 @@ const PublicCourseListing: React.FC = () => {
 
     const handleCourseClick = (courseId: string) => {
         dispatch(fetchPublicCourse(courseId)).then((action)=> {
-            console.log("action from dispatch",action)
             navigate(LearnerRoutes.courseDetails)
         }).catch(()=> {
             useErrorToast({message: "Can not fetch course!"})
@@ -47,8 +46,8 @@ const PublicCourseListing: React.FC = () => {
                                 <span className='text-red-500 text-lg text content-center'></span>
                             </li>
                         }
-                        {(isCoursesFetched === true && Array.isArray(publicCourses)) ? publicCourses.map((course) => (
-                            <div>
+                        {(isCoursesFetched === true && Array.isArray(publicCourses)) ? publicCourses.map((course,i) => (
+                            <div key={i}>
                                 {
                                     course.courseTitle !== "" && <SingleCourse onClick={() => handleCourseClick(course.courseId)} course={course} />
                                 }

@@ -32,7 +32,6 @@ const Message: React.FC = () => {
                 },
                 axiosInstance
             })).then((action) => {
-                console.log("new msg sending....")
                 let chat = action.payload
                 chat.users = singleChat.accessedChat.users
                 socket.emit("new message", chat)
@@ -97,7 +96,7 @@ const Message: React.FC = () => {
                 {isSingleChatLoading ? <div className='min-h-[75vh] flex flex-col justify-center'><LoaderCard size='md' /> </div> : <>
                     <div className="border-b border-gray-400 dark:border-gray-500 flex flex-col pb-6 md:flex-row gap-5 items-start md:items-center justify-between mb-5">
                         <div className='flex items-center gap-5'>
-                            <div className='pt-5 flex lg:hidden'>
+                            <div className='pt-5 flex'>
                                 <BackArrowButton onClick={() => dispatch(clearSingleChat())} />
                             </div>
                             <img className="w-8 h-8 rounded-full" src={!singleChat.partnerDetails.profilePicture || singleChat.partnerDetails.profilePicture === "Not Available" ? blankProfilePic : singleChat.partnerDetails.profilePicture} alt="Bonnie image" />

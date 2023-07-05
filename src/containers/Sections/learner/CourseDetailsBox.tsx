@@ -78,7 +78,7 @@ const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames }) => {
                     </span>
                 </div>
                 <div className='flex justify-center mt-10'>
-                    <AuthorCard name={course.authorDetails.fullname} picture={course.authorDetails.about} profileTitle={course.authorDetails.profileTitle}/>
+                    <AuthorCard user={course.authorDetails}/>
                 </div>
             </div>
         </div>

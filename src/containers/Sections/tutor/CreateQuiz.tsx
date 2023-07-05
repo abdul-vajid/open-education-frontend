@@ -215,8 +215,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
                     </div>
                     <div className="divide-y divide-gray-100 dark:divide-gray-700">
                         {
-                            questionsArray.map((question) => (
-                                <div className="flex flex-col gap-4 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                            questionsArray.map((question, i) => (
+                                <div key={i} className="flex flex-col gap-4 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
                                     <div className="w-full pl-3">
                                         <div className="text-gray-500 text-sm mb-1.5 dark:text-gray-400"> <span className="font-semibold text-gray-900 dark:text-white">Question</span>: {question.question}</div>
                                         <div className="text-xs text-red-600 dark:text-red-600">Unsaved question</div>
@@ -225,8 +225,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ classNames }) => {
                             ))
                         }
                         {
-                            isQuizAvailable && quiz.questions.map((question) => (
-                                <div className="flex flex-col gap-4 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                            isQuizAvailable && quiz.questions.map((question, key) => (
+                                <div key={key} className="flex flex-col gap-4 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
 
                                     <div className="w-full pl-3">
                                         <div className="text-gray-500 text-sm mb-1.5 dark:text-gray-400"> <span className="font-semibold text-gray-900 dark:text-white">Question</span>: {question.question}</div>

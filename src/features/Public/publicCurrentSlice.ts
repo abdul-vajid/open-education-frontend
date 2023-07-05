@@ -71,7 +71,6 @@ const publicCurrentSlice = createSlice({
             .addCase(fetchPublicCourse.fulfilled, (state, action: PayloadAction<InitialState["course"]>) => {
                 state.isFetchingCourse = false
                 state.isCourseFetched = true
-                console.log("fetchPublicCourse ",action.payload)
                 state.course.authorDetails = action.payload.authorDetails
                 state.course.courseDetails = action.payload.courseDetails
                 state.course.reviews = action.payload.reviews

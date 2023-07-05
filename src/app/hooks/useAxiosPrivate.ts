@@ -10,7 +10,6 @@ const useAxiosPrivate = () => {
     useEffect(() => {
         const requestIntercept = axiosPrivate.interceptors.request.use(
             (config: any) => {
-                console.log(config)
                 if (!config.headers.Authorization) {
                     config.headers.Authorization = `Bearer ${auth?.accessToken}`;
                 }
@@ -22,13 +21,10 @@ const useAxiosPrivate = () => {
         const responseIntercept = axiosPrivate.interceptors.response.use(
             (response: any) => response,
             async (error: any) => {
-                console.log("error inside axios intreceptor", error)
                 const prvsRequest = error?.config;
                 if (error?.response?.status === 403 && !prvsRequest?.sent) {
-                    console.log("inside axios intreceptor if")
                     prvsRequest.sent = true;
                     const { accessToken } = await refresh();
-                    console.log("axios token inside axios intreceptor if", error)
                     prvsRequest.headers.Authorization = `Bearer ${accessToken}`;
                     return axiosPrivate(prvsRequest);
                 }

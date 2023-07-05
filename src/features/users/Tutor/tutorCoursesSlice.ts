@@ -55,13 +55,11 @@ const tutorCoursesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCourses.pending, (state) => {
-            console.log("fetchCourses.pending")
             state.coursesFetching = true
             state.loading = true;
             state.courses = initialState.courses
         });
         builder.addCase(fetchCourses.fulfilled, (state, action: PayloadAction<InitialState['courses']>) => {
-            console.log("fetchCourses.fulfilled",action.payload)
             state.loading = false;
             state.coursesFetching = false
             state.coursesFeteched = true
@@ -69,7 +67,6 @@ const tutorCoursesSlice = createSlice({
             state.error = '';
         });
         builder.addCase(fetchCourses.rejected, (state, action) => {
-            console.log("fetchCourses.rejected",action.error)
             state.loading = false;
             state.coursesFetching = false
             state.courses = initialState.courses

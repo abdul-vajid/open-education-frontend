@@ -14,7 +14,6 @@ const CourseDetails: React.FC = () => {
 
     useEffect(() => {
         if (!courseDetailsAvailable) {
-            console.log("!courseDetailsAvailable")
             navigate("/tutor/courses",
                 {
                     replace: true
