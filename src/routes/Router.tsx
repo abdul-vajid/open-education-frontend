@@ -18,6 +18,7 @@ import CheckLoginStatus from "./Authorization/CheckLoginStatus";
 import LessonbasedQuizCreation from "../features/users/Tutor/LessonbasedQuizCreation";
 import HostCourse from "../features/users/Tutor/HostCourse";
 import Inbox from "../features/users/Common/Inbox";
+import Wishlist from "../features/users/Learner/Wishlist";
 
 const Router: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const Router: React.FC = () => {
         <Route path="/learner/courses" element={<LearnerCoursesPage />} />
         <Route path="/learner/course/details" element={<LeanerCourseDetails />} />
         <Route path="/learner/inbox" element={<Inbox />} />
+        <Route path="/learner/wishlist" element={<Wishlist />} />
       </Route>
       <Route path="/tutor" element={<TutorAuthorization />}>
         <Route path="/tutor" element={<TutorOverView />} />

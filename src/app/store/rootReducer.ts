@@ -10,7 +10,7 @@ import setUpValuationReducer from '../../features/users/Tutor/setUpValuationSlic
 import publicCurrentReducer from '../../features/Public/publicCurrentSlice';
 import inboxReducer from '../../features/users/Common/inboxSlice';
 import currentChatReducer from '../../features/users/Common/currentChatSlice';
-
+import wishlistReducer from '../../features/users/Learner/wishlistSlice';
 
 
 const rootReducer = combineReducers({
@@ -25,6 +25,7 @@ const rootReducer = combineReducers({
     publicCurrent: publicCurrentReducer,
     inbox: inboxReducer,
     currentChat: currentChatReducer,
+    wishlist: wishlistReducer
 });
 
 export default rootReducer;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import UserSidebar from '../../../containers/Navbars/UserSidebar'
 import UserNavBar from '../../../containers/Navbars/UserNavBar'
-import ListLessons from '../../../containers/Sections/tutor/ListLessons'
 import CourseDetailsBox from '../../../containers/Sections/learner/CourseDetailsBox'
 import { useNavigate } from 'react-router-dom'
 import {useAppSelector } from '../../../app/hooks/storeHooks'
@@ -9,7 +8,7 @@ import {useAppSelector } from '../../../app/hooks/storeHooks'
 const CourseDetails: React.FC = () => {
     const [sideMenu, setSideMenu] = useState(false)
     const navigate = useNavigate();
-    const { isCourseFetched, course } = useAppSelector(state => state.publicCurrent)
+    const { isCourseFetched } = useAppSelector((state) => state.publicCurrent)
 
     useEffect(() => {
         if (!isCourseFetched) {
@@ -18,7 +17,9 @@ const CourseDetails: React.FC = () => {
                     replace: true
                 });
         }
+        setSideMenu(false)
     }, [])
+
 
     return (
         <div className="overflow-auto">

@@ -28,9 +28,11 @@ const initialState: InitialState = {
 
 export const fetchPublicCourses = createAsyncThunk(
     'course/fetchPublicCourses',
-    async () => {
+    async (options:{}) => {
         try {
-            const response = await axios.get('/get-courses');
+            const response = await axios.get('/get-courses', {
+                params: options
+            });
             return response.data;
         } catch (error: any) {
             throw new Error(error.response?.data?.message || 'Something went wrong');

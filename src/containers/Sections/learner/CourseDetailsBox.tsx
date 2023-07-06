@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAppSelector } from '../../../app/hooks/storeHooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
 import { useNavigate } from 'react-router-dom'
 import notFoundImage from "../../../utils/assets/image-not-found.png"
 import PrimaryBtn from '../../../components/Button/PrimaryBtn'
@@ -9,6 +9,9 @@ import { LuFiles } from "react-icons/lu"
 import AuthorCard from '../../../components/Card/AuthorCard'
 import OutlineBtn from '../../../components/Button/OutlineBtn'
 import { RiHeartAddLine } from 'react-icons/ri'
+import { addToWishList } from '../../../features/users/Learner/wishlistSlice'
+import useAxiosPrivate from '../../../app/hooks/useAxiosPrivate'
+import { useSuccessToast } from '../../../app/hooks/toastHooks'
 
 type CourseDetailsBoxProps = {
     classNames?: string
@@ -16,7 +19,20 @@ type CourseDetailsBoxProps = {
 
 const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames }) => {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+    const axiosInstance = useAxiosPrivate()
     const { isCourseFetched, course } = useAppSelector(state => state.publicCurrent)
+
+
+    const handleAddToWishlist = (courseId: string) => {
+        dispatch(addToWishList({
+            body: {
+                courseId
+            }, axiosInstance
+        })).then(() => {
+            useSuccessToast({ message: "Course added to wishlist" });
+        })
+    }
 
     useEffect(() => {
         if (!isCourseFetched) {
@@ -66,7 +82,7 @@ const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames }) => {
                             <span className='text-md lg:text-5xl text-light_primary dark:text-dark_primary font-bold'>₹ {course.courseDetails.courseFee}</span>
                             <div className='hidden lg:flex mt-5 gap-4'>
                                 <PrimaryBtn btnText='Enroll Now' />
-                                <OutlineBtn btnText='Add To Wishlist' icon={<RiHeartAddLine/>}/>
+                                <OutlineBtn btnText='Add To Wishlist' onClick={() => handleAddToWishlist(course.courseDetails.courseId)} icon={<RiHeartAddLine />} />
                             </div>
                         </div>
                     </div>
@@ -78,7 +94,7 @@ const CourseDetailsBox: React.FC<CourseDetailsBoxProps> = ({ classNames }) => {
                     </span>
                 </div>
                 <div className='flex justify-center mt-10'>
-                    <AuthorCard user={course.authorDetails}/>
+                    <AuthorCard user={course.authorDetails} />
                 </div>
             </div>
         </div>

@@ -11,14 +11,15 @@ const Courses: React.FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchPublicCourses());
+        dispatch(fetchPublicCourses({}));
+        setSideMenu(false)
     }, [])
 
     return (
         <div className="overflow-auto">
             <UserNavBar sideMenuController={() => setSideMenu(!sideMenu)} />
             <UserSidebar sideMenu={sideMenu} />
-            <div className="p-5 mt-20 md:ml-64 flex flex-col gap-5 lg:flex-row-reverse lg:gap-5" onClick={() => { setSideMenu(true) }}>
+            <div className="p-5 mt-20 flex flex-col gap-5 lg:flex-row-reverse lg:gap-5" onClick={() => { setSideMenu(true) }}>
                 <div className='lg:w-[40%] h-full'>
                     <EnrolledCourses />
                 </div>

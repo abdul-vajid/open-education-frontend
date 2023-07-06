@@ -22,7 +22,7 @@ const Inbox: React.FC = () => {
     return (
         <>
             <UserNavBar sideMenuController={() => setSideMenu(!sideMenu)} />
-            <UserSidebar sideMenu={sideMenu} />
+            <UserSidebar sideMenu={sideMenu}/>
             {/* 
             ============================== Version 2 Inbox Ui ======================================
 

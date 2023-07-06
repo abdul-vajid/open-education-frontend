@@ -1,96 +1,53 @@
-import React, { useEffect } from 'react'
-import SingleCourse from '../../../components/Card/SingleCourse'
+import React from 'react'
 import SearchField from '../../../components/InputFiled/SearchField'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/storeHooks'
-import { fetchPublicCourses } from '../../../features/Public/publicSlice'
 import LoaderCard from '../../../components/Card/LoaderCard'
 import ListEmpty from '../../../components/ErrorCards/ListEmpty'
 import { LearnerRoutes } from '../../../app/types/enums'
 import { fetchPublicCourse } from '../../../features/Public/publicCurrentSlice'
 import { useErrorToast } from '../../../app/hooks/toastHooks'
 import { useNavigate } from 'react-router-dom'
-import { fieldOfStudyList } from '../../../app/constants/BasicConstants'
-import SelectInput from '../../../components/InputFiled/SelectInput'
+import SingleCourseInWishList from '../../../components/Card/SingleCourseInWishList'
 
-const PublicCourseListing: React.FC = () => {
+const WishListListing: React.FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const { publicCourses, isFetchingCourses, fetchingCoursesErrMsg, isCoursesFetched } = useAppSelector(state => state.public)
+    const navigate = useNavigate()
+    const { fetchError, isFetching, wishList} = useAppSelector(state => state.wishlist)
 
     const handleCourseClick = (courseId: string) => {
-        dispatch(fetchPublicCourse(courseId)).then(() => {
+        dispatch(fetchPublicCourse(courseId)).then(()=> {
             navigate(LearnerRoutes.courseDetails)
-        }).catch(() => {
-            useErrorToast({ message: "Can not fetch course!" })
+        }).catch(()=> {
+            useErrorToast({message: "Can not fetch course!"})
         })
     }
-
-    let timeoutId: number | null = null;
-
-    const handleSearch = (e: any) => {
-        const searchTerm = e.target.value;
-
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-
-        timeoutId = setTimeout(() => {
-            dispatch(fetchPublicCourses({ search: searchTerm }));
-            timeoutId = null;
-        }, 1500);
-    };
-    const handleFilter = (e: any) => {
-        const filterTerm = e.target.value;
-
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-
-        timeoutId = setTimeout(() => {
-            dispatch(fetchPublicCourses({ filter: filterTerm }));
-            timeoutId = null;
-        }, 1500);
-    };
-
-    useEffect(() => {
-        dispatch(fetchPublicCourses({}))
-    }, [])
-
 
     return (
         <div>
             <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div className="flex flex-col md:flex-row gap-5 items-start md:items-center justify-between my-5">
                     <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">Popular Courses</h5>
-                    <SearchField onChange={(e: any) => handleSearch(e)} />
-                    {/* <a href="#" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                    <SearchField />
+                    <a href="#" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                         View all
-                    </a> */}
+                    </a>
                 </div>
-                <SelectInput
-                    labelText=""
-                    name="field"
-                    messageType="error"
-                    optionList={fieldOfStudyList}
-                    isMessage={true}
-                    onChange={(e: any)=> handleFilter(e)}
-                />
                 <div>
                     <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
                         {
-                            fetchingCoursesErrMsg &&
+                            fetchError &&
                             <li className='py-3 sm:py-4"'>
                                 <span className='text-red-500 text-lg text content-center'></span>
                             </li>
                         }
-                        {(isCoursesFetched === true && Array.isArray(publicCourses)) ? publicCourses.map((course, i) => (
+                        {wishList.length > 0 ? wishList.map((course,i) => (
                             <div key={i}>
                                 {
-                                    course.courseTitle !== "" && <SingleCourse onClick={() => handleCourseClick(course.courseId)} course={course} />
+                                    course.courseTitle !== "" && <SingleCourseInWishList onClick={() => handleCourseClick(course.courseId)} course={course} />
                                 }
                             </div>
 
-                        )) : isFetchingCourses ? <div className='right-0 left-0'><LoaderCard /></div> : <ListEmpty message='Courses not found' />}
+                        )) : isFetching ? <LoaderCard /> : <ListEmpty message='Courses not found' />}
 
                     </ul>
                 </div>
@@ -110,4 +67,4 @@ const PublicCourseListing: React.FC = () => {
     )
 }
 
-export default PublicCourseListing
+export default WishListListing

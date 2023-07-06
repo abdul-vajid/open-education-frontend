@@ -19,6 +19,7 @@ const Courses: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchCourses(axiosInstance));
+        setSideMenu(false)
     }, [])
 
     return (
