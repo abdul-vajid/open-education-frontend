@@ -14,6 +14,7 @@ const Inbox: React.FC = () => {
     // const axiosInstance = useAxiosPrivate()
     const { isSingleChatfetched, isSingleChatLoading } = useAppSelector(state => state.inbox)
 
+    // For version 2
     // useEffect(() => {
     //     dispatch(getChatList(axiosInstance))
     // }, [])
@@ -22,23 +23,27 @@ const Inbox: React.FC = () => {
         <>
             <UserNavBar sideMenuController={() => setSideMenu(!sideMenu)} />
             <UserSidebar sideMenu={sideMenu} />
-            {/* <div className="p-5 mt-20 md:ml-64 hidden xl:flex gap-5 lg:gap-5" onClick={() => { setSideMenu(true) }}>
+            {/* 
+            ============================== Version 2 Inbox Ui ======================================
+
+            <div className="p-5 mt-20 md:ml-64 hidden xl:flex gap-5 lg:gap-5" onClick={() => { setSideMenu(true) }}>
                 <div className="w-full lg:w-3/6">
                     <ChatList />
                 </div>
                 <div className="w-3/6">
                     {(isSingleChatfetched || isSingleChatLoading) && <Message />}
                 </div>
-            </div> */}
+            </div> 
 
-            {/* <div className="p-5 mt-20 md:ml-64 flex xl:hidden gap-5 lg:gap-5" onClick={() => { setSideMenu(true) }}>
+             <div className="p-5 mt-20 md:ml-64 flex xl:hidden gap-5 lg:gap-5" onClick={() => { setSideMenu(true) }}>
                 <div className="w-full">
                     {(isSingleChatfetched || isSingleChatLoading) ? <Message /> : <ChatList />}
                 </div>
             </div > */}
+
             <div className="p-5 mt-20 md:ml-64 flex gap-5 lg:gap-5" onClick={() => { setSideMenu(true) }}>
                 {(isSingleChatfetched || isSingleChatLoading) ? <div className="w-full lg:w-2/3"><Message />: </div> :
-                <div className="w-full lg:w-2/4"> <ChatList /></div>
+                    <div className="w-full lg:w-2/4"> <ChatList /></div>
                 }
 
             </div >
